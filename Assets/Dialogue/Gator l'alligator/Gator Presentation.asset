@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4d4083e61a46c288be06b74a6fbcce, type: 3}
+  m_Name: Gator Presentation
+  m_EditorClassIdentifier: 
+  lines:
+  - text: <rainb>Coucou mon cuicui !</> T'es pas du coin toi, non ?
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: 88870190aa0b98443ba28890db6f9158, type: 3}
+    speakerImage: {fileID: 21300000, guid: 4443c7e7da789c0428b68f9ac3d10c26, type: 3}
+    speakerName: Gator l'alligator
+  - text: "Je sais pas cuicuimment t'es arriv\xE9 ici,<waitfor=1> mais ce que je
+      peux te dire,<wiggle> c'est que personne ne sort d'ici sans <rainb>ma putain
+      d'autorisation espece de salope !</>"
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: cab850fcff363ed459f200e177ea7b30, type: 3}
+    speakerImage: {fileID: 21300000, guid: 4443c7e7da789c0428b68f9ac3d10c26, type: 3}
+    speakerName: Gator l'alligator
+  - text: "Ah et puis tiens, tant que t'y es,<?Gator Look Wisthon Start> j'ai un
+      ami l\xE0 bas, vas lui donner un coup de main steupl\xE9"
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: e4bed871194d339449cef8c0721d0eaa, type: 3}
+    speakerImage: {fileID: 21300000, guid: 4443c7e7da789c0428b68f9ac3d10c26, type: 3}
+    speakerName: Gator l'alligator
+  - text: <?Gator Look Wisthon Stop><wave>Si tu vas l'aider je te laisserai repartir
+      mon poussin.</>
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: 3916376c059d99f4688e857581c7329f, type: 3}
+    speakerImage: {fileID: 21300000, guid: 4443c7e7da789c0428b68f9ac3d10c26, type: 3}
+    speakerName: Gator l'alligator

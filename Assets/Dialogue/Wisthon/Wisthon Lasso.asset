@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4d4083e61a46c288be06b74a6fbcce, type: 3}
+  m_Name: Wisthon Lasso
+  m_EditorClassIdentifier: 
+  lines:
+  - text: "<speed=0.8>Maintenant qu'tas fait un p'tit truc rapide l\xE0, au lieu
+      de nous peter les couilles tu veux pas aller chercher mon lasso vite fait?
+      Merci connard."
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: 701a3eb5a5e11df4b9731feb15d53e21, type: 3}
+    speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
+    speakerName: Wisthon
