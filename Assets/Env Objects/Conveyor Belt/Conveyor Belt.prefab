@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   holdDuration: 0.75
   useMatSpeed: 15
-  moveSpeed: 30
+  moveSpeed: 15
   canUseCooldown: 1.5
   rotLerpSpeed: 5
   endRotDuration: 0.6
@@ -129,6 +129,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  updatePathWhileUsing: 0
   playerHoldPos: {fileID: 721042770003713957}
   renderer: {fileID: 5929873658262935384}
   superSpeedSpline:
