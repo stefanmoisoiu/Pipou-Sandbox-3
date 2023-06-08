@@ -14,7 +14,7 @@ public class ConnectToUGS : MonoBehaviour
         else await UnityServices.InitializeAsync();
 #endif
 #if UNITY_STANDALONE
-        UnityServices.InitializeAsync();
+        await UnityServices.InitializeAsync();
 #endif
         AuthenticationService.Instance.SignedIn += () =>
         {

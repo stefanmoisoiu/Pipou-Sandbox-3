@@ -20,10 +20,11 @@ public class DialoguePlayer : MonoBehaviour
         }
     }
 
-    public void PlayDialogue(int index)
+    public async void PlayDialogue(int index)
     {
-        if (properties[index].usedOneShot) return;
-        if(properties[index].oneShot) properties[index].usedOneShot = true;
+        if (properties[index].mustBeInSpecificState)
+            if (!await properties[index].dialogueState.IsInState(properties[index].specificStateCondition)) return;
+        
         if (properties[index].dialogueCam != null) properties[index].dialogueCam.Priority = 200;
 
         for (int i = 0; i < properties[index].dialogueEvents.Length; i++)
@@ -37,7 +38,12 @@ public class DialoguePlayer : MonoBehaviour
         StartCoroutine(DialogueManager.Instance.PlayDialogue(
                         properties[index].dialogue, 
             () => properties[index].onLineFinished?.Invoke(),
-                () => properties[index].onFinished?.Invoke()));
+                        () =>
+                        {
+                            if (properties[index].setStateOnFinish)
+                                properties[index].dialogueState.SetState(properties[index].onFinishState);
+                            properties[index].onFinished?.Invoke();
+                        }));
     }
     [Serializable]
     public class DialogueEvent
@@ -54,10 +60,18 @@ public class DialoguePlayer : MonoBehaviour
     [Serializable]
     public class DialoguePlayerProperty
     {
+        [Title("Info")]
         public ScriptableDialogue dialogue;
         public CinemachineVirtualCamera dialogueCam;
-        public bool oneShot;
-        [ReadOnly]public bool usedOneShot;
+        [Title("Cloud State")]
+        public DialogueCloudState dialogueState;
+        [Space]
+        public bool mustBeInSpecificState;
+        [ShowIf("mustBeInSpecificState")] public string specificStateCondition;
+        [Space]
+        public bool setStateOnFinish;
+        [ShowIf("setStateOnFinish")]public string onFinishState;
+        [Title("Events")]
         public DialogueEvent[] dialogueEvents;
         public UnityEvent onStarted,onLineFinished, onFinished;
     }
