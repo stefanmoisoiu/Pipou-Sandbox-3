@@ -35,9 +35,8 @@ public class NetcodeGameManager : MonoBehaviour
                 DontDestroyOnLoad(this);
         }
 
-        private void OnDestroy() => QuitGame();
-
-        private async void QuitGame()
+        private async void OnDestroy() => await QuitGame();
+        private async Task QuitGame()
         {
                 await LobbyManager.DisconnectFromLobby();
         }

@@ -18,7 +18,6 @@ public static class LobbyManager
                         {
                                 { "RelayJoinCode", new DataObject(DataObject.VisibilityOptions.Member, value: relayJoinCode) },
                         };
-                        createLobbyOptions.Player = GetPlayer(lobbyPlayerInfo);
 
                         Lobby lobby = await Lobbies.Instance.CreateLobbyAsync($"Partie de {lobbyPlayerInfo.PlayerName}", maxPlayers - 1,
                                 createLobbyOptions);
