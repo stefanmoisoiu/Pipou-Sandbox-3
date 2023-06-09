@@ -20,5 +20,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Swamp Area.unity
     guid: cfe78cf88ce273c45903d848b4be930e
+  - enabled: 1
+    path: Assets/Scenes/Redwood Area.unity
+    guid: f750e09dd2a27cd49b3f6b0c90d6ffa1
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
