@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Cinemachine;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -22,8 +23,23 @@ public class DialoguePlayer : MonoBehaviour
 
     public async void PlayDialogue(int index)
     {
-        if (properties[index].mustBeInSpecificState)
-            if (!await properties[index].dialogueState.IsInState(properties[index].specificStateCondition)) return;
+        if (properties[index].dialogueKey != default)
+        {
+            string conditionValue = await properties[index].GetState();
+            conditionValue ??= "";
+            foreach (DialoguePlayerCondition condition in properties[index].conditions)
+            {
+                switch (condition.condition)
+                {
+                    case DialoguePlayerCondition.ConditionType.Equal:
+                        if (conditionValue != condition.cloudValue) return;
+                        break;
+                    case DialoguePlayerCondition.ConditionType.Different:
+                        if (conditionValue == condition.cloudValue) return;
+                        break;
+                }
+            }
+        }
         
         if (properties[index].dialogueCam != null) properties[index].dialogueCam.Priority = 200;
 
@@ -41,7 +57,7 @@ public class DialoguePlayer : MonoBehaviour
                         () =>
                         {
                             if (properties[index].setStateOnFinish)
-                                properties[index].dialogueState.SetState(properties[index].onFinishState);
+                                properties[index].SetState(properties[index].onFinishState);
                             properties[index].onFinished?.Invoke();
                         },
                         properties[index].skippable,
@@ -67,17 +83,26 @@ public class DialoguePlayer : MonoBehaviour
         public CinemachineVirtualCamera dialogueCam;
         [Title("Dialogue Flow")]
         public bool skippable = true;
-        public bool autoSkip = false;
-        [Title("Cloud State")]
-        public DialogueCloudState dialogueState;
-        [Space]
-        public bool mustBeInSpecificState;
-        [ShowIf("mustBeInSpecificState")] public string specificStateCondition;
-        [Space]
+        public bool autoSkip;
+        [Title("Cloud & Conditions")]
+        public string dialogueKey;
+        public DialoguePlayerCondition[] conditions;
+        [Title("Events")]
         public bool setStateOnFinish;
         [ShowIf("setStateOnFinish")]public string onFinishState;
-        [Title("Events")]
+        [Space]
         public DialogueEvent[] dialogueEvents;
         public UnityEvent onStarted,onLineFinished, onFinished;
+
+        public async Task<string> GetState() => await CloudSaver.GetData(dialogueKey);
+        public async void SetState(string state) => await CloudSaver.SaveData(dialogueKey, state);
+    }
+
+    [Serializable]
+    public struct DialoguePlayerCondition
+    {
+        public ConditionType condition;
+        public string cloudValue;
+        public enum ConditionType {Equal,Different}
     }
 }

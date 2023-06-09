@@ -3181,11 +3181,12 @@ MonoBehaviour:
   properties:
   - dialogue: {fileID: 11400000, guid: f7d510f540bfcf04d8b30d705f5eb5e0, type: 2}
     dialogueCam: {fileID: 163226800}
-    dialogueState:
-      stateKey: merlinState
-      defaultState: Start
-    mustBeInSpecificState: 1
-    specificStateCondition: Start
+    skippable: 1
+    autoSkip: 0
+    dialogueKey: merlin
+    conditions:
+    - condition: 0
+      cloudValue: 
     setStateOnFinish: 1
     onFinishState: WaitingWisthon
     dialogueEvents:
