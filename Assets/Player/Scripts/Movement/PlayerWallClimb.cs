@@ -35,7 +35,7 @@ public class PlayerWallClimb : NetworkBehaviour
     private void Update()
     {
         if (!IsOwner) return;
-        if(PlayerGrounded.IsGrounded) CanWallClimb = true;
+        if(PlayerGrounded.IsGrounded && PlayerGrounded.IsOnControllableSlope) CanWallClimb = true;
     }
 
     private void FixedUpdate()

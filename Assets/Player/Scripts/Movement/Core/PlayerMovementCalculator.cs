@@ -14,14 +14,20 @@ public static class PlayerMovementCalculator
 
     public static Vector3 GetFullMovementDir(Vector3 dir, Vector3 velocity,float maxControllableSpeed)
     {
-        if (PlayerGrounded.IsGrounded && !PlayerGrounded.IsOnControllableSlope)
+        Vector3 hNormal = new (PlayerGrounded.GroundHitRaycast.normal.x,0,PlayerGrounded.GroundHitRaycast.normal.z);
+        if (PlayerGrounded.IsGrounded &&
+            !PlayerGrounded.IsOnControllableSlope &&
+            !PlayerSlideCalculator.FacingDownwards(dir,hNormal,.2f))
+        {
             return Vector3.zero;
+        }
         
         Vector3 result = dir;
         result = GetGroundProjectedVector(result);
-        
         if (velocity.magnitude >= maxControllableSpeed && Vector3.Dot(dir, velocity.normalized) >= 0)
+        {
             result = GetVelocityProjectedVector(velocity, result);
+        }
         
         return result;
     }

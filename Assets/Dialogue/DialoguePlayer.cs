@@ -43,7 +43,9 @@ public class DialoguePlayer : MonoBehaviour
                             if (properties[index].setStateOnFinish)
                                 properties[index].dialogueState.SetState(properties[index].onFinishState);
                             properties[index].onFinished?.Invoke();
-                        }));
+                        },
+                        properties[index].skippable,
+                        properties[index].autoSkip));
     }
     [Serializable]
     public class DialogueEvent
@@ -63,6 +65,9 @@ public class DialoguePlayer : MonoBehaviour
         [Title("Info")]
         public ScriptableDialogue dialogue;
         public CinemachineVirtualCamera dialogueCam;
+        [Title("Dialogue Flow")]
+        public bool skippable = true;
+        public bool autoSkip = false;
         [Title("Cloud State")]
         public DialogueCloudState dialogueState;
         [Space]

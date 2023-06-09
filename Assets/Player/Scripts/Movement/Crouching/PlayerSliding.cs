@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerSliding : NetworkBehaviour,IPlayerCrouchAction
 {
     [FoldoutGroup("Properties")] [SerializeField]
-    private float slideStopSpeedThreshold = 3;
+    private float slideStopSpeedThreshold = 3,startSlideForce = 20;
     [FoldoutGroup("Properties")] [SerializeField]
     private PlayerSlideCalculator.SlideDampingProperties slideDampingProperties;
 
@@ -71,6 +71,13 @@ public class PlayerSliding : NetworkBehaviour,IPlayerCrouchAction
         Sliding = true;
         playerHeight.SetHeight(PlayerHeight.HeightType.Crouch);
         slideFOV.SetNewAmount(slideAddedFOV);
+
+        if (PlayerGrounded.IsOnControllableSlope)
+        {
+            Vector3 force = orientation.forward * startSlideForce;
+            PlayerMovementCalculator.GetGroundProjectedVector(force);
+            rb.AddForce(force,ForceMode.Impulse);
+        }
 
         Slide();
     }

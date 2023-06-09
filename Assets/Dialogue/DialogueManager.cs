@@ -34,23 +34,28 @@ public class DialogueManager : NetworkBehaviour
         Instance = this;
         player.onTextShowed.AddListener(delegate { finishedTyping = true;});
     }
-    public IEnumerator PlayDialogue(ScriptableDialogue dialogue,Action onLineFinished = null,Action onFinish = null)
+    public IEnumerator PlayDialogue(ScriptableDialogue dialogue,Action onLineFinished = null,Action onFinish = null, bool skippable = true,bool autoSkip = false)
     {
         animator.Play("Show Dialogue");
         for (int i = 0; i < dialogue.lines.Length; i++)
         {
             ShowDialogueLine(dialogue, i);
-            InputManager.onUse += delegate { SetDialogueSpeed(skipDialogueSpeed); };
+            if(skippable) InputManager.onUse += delegate { SetDialogueSpeed(skipDialogueSpeed); };
             finishedTyping = false;
             while (!finishedTyping)
             {
                 yield return null;
             }
-            InputManager.onUse -= delegate { SetDialogueSpeed(skipDialogueSpeed); };
-            bool waitForInput = true;
-            InputManager.onUse += delegate { waitForInput = false; };
-            yield return new WaitWhile(() => waitForInput);
-            InputManager.onUse -= delegate { waitForInput = false; };
+            if(skippable) InputManager.onUse -= delegate { SetDialogueSpeed(skipDialogueSpeed); };
+
+            if (!autoSkip)
+            {
+                bool waitForInput = true;
+                InputManager.onUse += delegate { waitForInput = false; };
+                yield return new WaitWhile(() => waitForInput);
+                InputManager.onUse -= delegate { waitForInput = false; };
+            }
+            
             SetDialogueSpeed(1);
             animator.Play("Next Dialogue");
             onLineFinished?.Invoke();

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c4d4083e61a46c288be06b74a6fbcce, type: 3}
+  m_Name: Wisthon Save
+  m_EditorClassIdentifier: 
+  lines:
+  - text: Bien joue mon gars ! T'as battu le monstre, j'suis fier de toi. Mais bon,
+      tu peux pas chercher mes gants de boxe au passage?
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: 6e67452f19d98fa499fcc249200bfff2, type: 3}
+    speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
+    speakerName: Wisthon
+  - text: "Aller, \xE7a prends deux minutes. Alleeer, tu peux bien faire ca pour
+      moi?"
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: d6e2219743708574da6da870784237db, type: 3}
+    speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
+    speakerName: Wisthon
+  - text: "Aller! On se connait depuis longtemps, \xE7a fait plus de deux minutes
+      c'est deja bien<speed=1.4>! Encul\xE9 de ta race."
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: b1fc3a78d06c31d4aac98e969f031bfe, type: 3}
+    speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
+    speakerName: Wisthon

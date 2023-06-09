@@ -29,7 +29,7 @@ public class PlayerDive : NetworkBehaviour,IPlayerCrouchAction
     {
         if (!IsOwner) return;
         if(Diving) PlayerDamping.SetDamping(diveDamping);
-        if (Diving && PlayerGrounded.IsGrounded) StopDive();
+        if (Diving && PlayerGrounded.IsGrounded && PlayerGrounded.IsOnControllableSlope) StopDive();
     }
     public bool CanStartAction() => !Diving &&
                                     !PlayerGrounded.IsGrounded &&

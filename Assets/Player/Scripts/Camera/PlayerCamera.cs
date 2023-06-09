@@ -39,26 +39,18 @@ public class PlayerCamera : NetworkBehaviour
 
         private void Look()
         {
-                TargetRotation += new Vector2(
-                        InputManager.LookInput.x * sensitivity / 5, 
-                        Mathf.Clamp(InputManager.LookInput.y * sensitivity / 5,-minHeadAngle, maxHeadAngle));
-                orientation.localRotation = Quaternion.Lerp(orientation.localRotation,Quaternion.Euler(new Vector3(0, TargetRotation.x, 0)),rotLerpSpeed * Time.deltaTime);
-                head.localRotation = Quaternion.Lerp(head.localRotation,Quaternion.Euler(new Vector3(-TargetRotation.y, 0, 0)),rotLerpSpeed * Time.deltaTime);
-        }
-        private Vector3 ClampVector(Vector3 direction, Vector3 center, float maxAngle){
- 
- 
-                float angle = Vector3.Angle(center, direction);
-                if(angle > maxAngle){
- 
-                        direction.Normalize();
-                        center.Normalize();
-                        Vector3 rotation = (direction - center) / angle;
-                        return (rotation * maxAngle) + center;
- 
-                }
- 
-                return direction;
- 
+                TargetRotation = new Vector2(
+                        TargetRotation.x + InputManager.LookInput.x * sensitivity / 5, 
+                        Mathf.Clamp(TargetRotation.y + InputManager.LookInput.y * sensitivity / 5,-minHeadAngle, maxHeadAngle));
+                
+                orientation.localRotation = Quaternion.Lerp(
+                        orientation.localRotation,
+                        Quaternion.Euler(new Vector3(0, TargetRotation.x, 0)),
+                        rotLerpSpeed * Time.deltaTime);
+                
+                head.localRotation = Quaternion.Lerp(
+                        head.localRotation,
+                        Quaternion.Euler(new Vector3(-TargetRotation.y, 0, 0)),
+                        rotLerpSpeed * Time.deltaTime);
         }
 }

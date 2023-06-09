@@ -14,9 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lines:
   - text: <shake><speed=0.75>Au secours, le monstre du marais nous attaque !!<?Wisthon
-      Boss Cam Start>Aides-nous Gungan, Aides-nous Gungan !!!<?Wisthon Boss Cam End></>
+      Boss Cam Start>Aides-nous Gungan, Aides-nous Gungan !!!</>
     audioType: 2
     typingSounds: []
     audioClip: {fileID: 8300000, guid: 0c7f8c228f3b99f4d915678a55e9b748, type: 3}
+    speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
+    speakerName: Wisthon
+  - text: "<shake><speed=0.6>Gungan, utilises les tapis de course que j'ai dispos\xE9
+      sur tout le terrain. Aides-nous !<?Wisthon Boss Cam End></>"
+    audioType: 2
+    typingSounds: []
+    audioClip: {fileID: 8300000, guid: db5ef493aef55ac47bdcc0e4de13bd75, type: 3}
     speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
     speakerName: Wisthon

@@ -32,7 +32,7 @@ public class PlayerGrounded : NetworkBehaviour
         
         if (IsGrounded) GroundHitRaycast = groundHit;
         rb.useGravity = !(IsGrounded &&
-                          !IsOnControllableSlope &&
+                          IsOnControllableSlope &&
                           PlayerJump.CanJump &&
                           !SleighItem.Sleighing);
     }

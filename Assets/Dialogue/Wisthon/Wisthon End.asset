@@ -13,24 +13,23 @@ MonoBehaviour:
   m_Name: Wisthon End
   m_EditorClassIdentifier: 
   lines:
-  - text: Ah bah bien joue gros connard ! T'as pris trop de temps. Ma femme m'a quitte
-      entre temps.
+  - text: <shake>Putain de merde! <small>Putain de merde... Ah t'es la Gungan...</>
     audioType: 2
     typingSounds: []
-    audioClip: {fileID: 8300000, guid: 59f3438e2f287ec4398374fc4821651c, type: 3}
+    audioClip: {fileID: 8300000, guid: c5ffb86fe37271e409d21ce254a574a0, type: 3}
     speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
     speakerName: Wisthon
-  - text: Bon c'est bon tu peux le garder ton lasso de merde, tout' facon j'en ai
-      plus besoin.
+  - text: <shake>Est-ce que tu peux me donner un dernier service tiens tant que t'es
+      la?</>
     audioType: 2
     typingSounds: []
-    audioClip: {fileID: 8300000, guid: aad100cf21d12244b90382670df9e301, type: 3}
+    audioClip: {fileID: 8300000, guid: 3ddaad2faddd24f45b1b16a34e982f95, type: 3}
     speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
     speakerName: Wisthon
-  - text: <shake>Puis bon la faut que j'appelle le juge la, Elle m'a trompe avec
-      le le-<incr>la putain de biche</incr> la, le putain de fan.</shake>
+  - text: <shake>Vas trouver la biche et petes lui la gueule avec les gants de boxe
+      je t'en supplie.</>
     audioType: 2
     typingSounds: []
-    audioClip: {fileID: 8300000, guid: edc52e8b2c074ec4ba3f9693c4425fab, type: 3}
+    audioClip: {fileID: 8300000, guid: 903114ebc24c96d4caedbed68492236c, type: 3}
     speakerImage: {fileID: 21300000, guid: 873ea465f84f8ba4193e4b12985a26a7, type: 3}
     speakerName: Wisthon
