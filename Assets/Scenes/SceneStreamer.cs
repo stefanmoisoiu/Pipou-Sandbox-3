@@ -7,8 +7,6 @@ using UnityEngine.SceneManagement;
 public class SceneStreamer : MonoBehaviour
 {
     [SerializeField] private SceneToLoad[] scenesToLoad;
-    [SerializeField] private bool showGizmos = true;
-    
 
     private void Update()
     {
@@ -46,17 +44,17 @@ public class SceneStreamer : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (!showGizmos) return;
         foreach (SceneToLoad sceneToLoad in scenesToLoad)
         {
-            if(sceneToLoad == null) continue;
+            if(sceneToLoad == null || !sceneToLoad.showGizmos) continue;
             foreach (ScenePoint scenePoint in sceneToLoad.scenePoints)
             {
                 if(scenePoint.pointPos == null) continue;
                 Gizmos.color = Color.blue;
                 Gizmos.DrawSphere(scenePoint.pointPos.position,0.5f);
-                Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(scenePoint.pointPos.position,scenePoint.size);
+                Gizmos.color = sceneToLoad.gizmoColor;
+                if(sceneToLoad.wireOutline) Gizmos.DrawWireSphere(scenePoint.pointPos.position,scenePoint.size);
+                else Gizmos.DrawSphere(scenePoint.pointPos.position,scenePoint.size);
             }
         }
     }
@@ -67,6 +65,8 @@ public class SceneStreamer : MonoBehaviour
         public string sceneName;
         public ScenePoint[] scenePoints;
         [ReadOnly]public bool loaded;
+        public bool showGizmos = true,wireOutline = true;
+        public Color gizmoColor = Color.red;
     }
     [Serializable]
     public struct ScenePoint

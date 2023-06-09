@@ -23,6 +23,7 @@ public class DialogueManager : NetworkBehaviour
     public TextAnimator TextAnimator => textAnimator;
     private bool finishedTyping;
     
+    public static bool Talking { get; private set; }
     private void Start()
     {
         if (!IsOwner) return;
@@ -36,6 +37,7 @@ public class DialogueManager : NetworkBehaviour
     }
     public IEnumerator PlayDialogue(ScriptableDialogue dialogue,Action onLineFinished = null,Action onFinish = null, bool skippable = true,bool autoSkip = false)
     {
+        Talking = true;
         animator.Play("Show Dialogue");
         for (int i = 0; i < dialogue.lines.Length; i++)
         {
@@ -62,6 +64,7 @@ public class DialogueManager : NetworkBehaviour
         }
         voiceAudioSource.Stop();
         animator.Play("Hide Dialogue");
+        Talking = false;
         yield return null;
         onFinish?.Invoke();
     }
