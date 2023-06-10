@@ -1278,8 +1278,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 60}
-  m_SizeDelta: {x: 0, y: 120}
+  m_AnchoredPosition: {x: 0, y: 70}
+  m_SizeDelta: {x: 0, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3059923636962793048
 CanvasRenderer:
@@ -1905,7 +1905,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 59.999966, y: -60}
+  m_AnchoredPosition: {x: 62.5, y: -70}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3889409106167182650
@@ -2280,6 +2280,7 @@ GameObject:
   - component: {fileID: 4420291037040532086}
   - component: {fileID: 6481026955830942102}
   - component: {fileID: 336843663896073779}
+  - component: {fileID: 3328385503868036140}
   m_Layer: 0
   m_Name: Visual Scripts
   m_TagString: Untagged
@@ -2333,6 +2334,33 @@ MonoBehaviour:
   animator: {fileID: 8787196803036655492}
   animMoveLerpSpeed: 15
   animTransitionDuration: 0.15
+--- !u!114 &3328385503868036140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3133231000829256913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ee1338e9d1f1346b0ac0adcd18b1ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshesToChange:
+  - {fileID: 862839765044079889}
+  - {fileID: 1706895049201783488}
+  skins:
+  - {fileID: 2100000, guid: 15a6aed53c764b649a53bed95bb93fea, type: 2}
+  - {fileID: 2100000, guid: 17c74e5c6ec0b4343a6447b98b2db84a, type: 2}
+  - {fileID: 2100000, guid: c2a98eb77b122b9478d569ad4181d3b4, type: 2}
+  - {fileID: 2100000, guid: 92cd76591d6712142a7abf28226fc3c4, type: 2}
+  - {fileID: 2100000, guid: ff39f753ac5244a4aa7b1a6a0edb05ee, type: 2}
+  - {fileID: 2100000, guid: f48fb7ec2106afa47af6d2c02d62c493, type: 2}
+  - {fileID: 2100000, guid: 684ec12e05ec6da468d2c7719032bd1a, type: 2}
+  - {fileID: 2100000, guid: e231f6cd27f18ac469e6da49aa961eb3, type: 2}
+  - {fileID: 2100000, guid: ea4f31e6caaeaef4f9a70611efc0b3d6, type: 2}
+  - {fileID: 2100000, guid: 928a13db4d2538846953a9224ffaf3e0, type: 2}
+  skinCloudKey: selectedSkin
 --- !u!1 &3307191001982298437
 GameObject:
   m_ObjectHideFlags: 0
@@ -3761,8 +3789,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4022,7 +4050,7 @@ MonoBehaviour:
         charsTimeOffset: 0
       scaleX:
         enabled: 1
-        amplitude: 0.4
+        amplitude: 0.5
         curve:
           serializedVersion: 2
           m_Curve:
@@ -4051,7 +4079,7 @@ MonoBehaviour:
         charsTimeOffset: 0
       scaleY:
         enabled: 1
-        amplitude: 0.4
+        amplitude: 0.5
         curve:
           serializedVersion: 2
           m_Curve:
@@ -5159,8 +5187,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 455.61148, y: -60}
-  m_SizeDelta: {x: 668.5372, y: 100}
+  m_AnchoredPosition: {x: 455.61148, y: -70}
+  m_SizeDelta: {x: 668.5372, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9179097441281277629
 CanvasRenderer:
