@@ -13,6 +13,7 @@ public class PlayerBounds : NetworkBehaviour
     
     private void Update()
     {
+        if (!IsOwner) return;
         if (transform.root.position.y < yBound)
         {
             rb.position = respawnPos;

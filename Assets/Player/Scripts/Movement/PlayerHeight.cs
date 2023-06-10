@@ -18,6 +18,8 @@ public class PlayerHeight : NetworkBehaviour
     private Transform stopCrouchCheckPos;
     [FoldoutGroup("Stop Crouch Properties")] [SerializeField]
     private float stopCrouchCheckSize;
+    [FoldoutGroup("Stop Crouch Properties")] [SerializeField]
+    private LayerMask stopCrouchLayer;
     [FoldoutGroup("Height Lerp Properties")] [SerializeField]
     private float heightLerpDuration;
     [FoldoutGroup("Height Lerp Properties")] [SerializeField]
@@ -54,7 +56,7 @@ public class PlayerHeight : NetworkBehaviour
         switch (heightType)
         {
             case HeightType.Normal:
-                if (CurrentHeight != HeightType.Normal && Physics.CheckSphere(stopCrouchCheckPos.position, stopCrouchCheckSize)) return;
+                if (CurrentHeight != HeightType.Normal && Physics.CheckSphere(stopCrouchCheckPos.position, stopCrouchCheckSize,stopCrouchLayer)) return;
                 
                 if(heightCoroutine != null) StopCoroutine(heightCoroutine);
                 heightCoroutine = StartCoroutine(HeightLerp(baseHeight));

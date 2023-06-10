@@ -2854,7 +2854,7 @@ MonoBehaviour:
   snapTimeThreshold: 3
   syncPosition: 0
   syncRotation: 0
-  syncScale: 7
+  syncScale: 0
   syncVelocity: 0
   syncAngularVelocity: 0
   isPositionCompressed: 0
@@ -2865,7 +2865,7 @@ MonoBehaviour:
   automaticallyResetTime: 1
   isSmoothingAuthorityChanges: 0
   transformSource: 0
-  whenToUpdateTransform: 1
+  whenToUpdateTransform: 0
   sendRate: 30
   networkChannel: 
   childObjectToSync: {fileID: 0}
@@ -4761,6 +4761,9 @@ MonoBehaviour:
   crouchHeight: 1.5
   stopCrouchCheckPos: {fileID: 3621334213549346138}
   stopCrouchCheckSize: 0.45
+  stopCrouchLayer:
+    serializedVersion: 2
+    m_Bits: 8
   heightLerpDuration: 0.1
   heightLerpEase:
     serializedVersion: 2

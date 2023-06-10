@@ -6770,7 +6770,7 @@ PrefabInstance:
     - target: {fileID: 3935411750144710324, guid: 95d182082f78fee4387753363267c45b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 57.36
+      value: 58.87
       objectReference: {fileID: 0}
     - target: {fileID: 3935411750144710324, guid: 95d182082f78fee4387753363267c45b,
         type: 3}
@@ -6780,7 +6780,7 @@ PrefabInstance:
     - target: {fileID: 3935411750144710324, guid: 95d182082f78fee4387753363267c45b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.92
+      value: 19.17
       objectReference: {fileID: 0}
     - target: {fileID: 3935411750144710324, guid: 95d182082f78fee4387753363267c45b,
         type: 3}
@@ -7545,6 +7545,109 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1515144677}
   m_CullTransparentMesh: 1
+--- !u!1 &1534980826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1534980831}
+  - component: {fileID: 1534980830}
+  - component: {fileID: 1534980829}
+  - component: {fileID: 1534980832}
+  m_Layer: 0
+  m_Name: Zone Title
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1534980829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534980826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6a3a4d050d14e84d99472362d21838c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1534980832}
+        m_TargetAssemblyTypeName: ZoneTitle, Assembly-CSharp
+        m_MethodName: TrySetTitle
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onStay:
+    m_PersistentCalls:
+      m_Calls: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &1534980830
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534980826}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 108.908485, y: 50, z: 111.78557}
+  m_Center: {x: -0.49119183, y: 0, z: 3.5299432}
+--- !u!4 &1534980831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534980826}
+  m_LocalRotation: {x: -0, y: 0.064958125, z: -0, w: 0.99788797}
+  m_LocalPosition: {x: 0, y: 18.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 89
+  m_LocalEulerAnglesHint: {x: 0, y: 7.449, z: 0}
+--- !u!114 &1534980832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534980826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcca80db9410c0443977d0d7bdeba8e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Le jardin
+  subtitle: La zone des OG
+  titleDuration: 6
 --- !u!1001 &1550273935
 PrefabInstance:
   m_ObjectHideFlags: 0
