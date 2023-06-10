@@ -22,8 +22,8 @@ public class PlayerCamera : NetworkBehaviour
                 CanLook = true;
                 if (IsOwner)
                 {
-                        Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = true;
                         Camera.main.transform.position = headCam.position;
                 }
                 else

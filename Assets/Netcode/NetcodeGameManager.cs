@@ -13,7 +13,7 @@ public class NetcodeGameManager : MonoBehaviour
         public static NetcodeGameManager Instance;
 
         [FoldoutGroup("Properties")] [SerializeField]
-        private int maxPlayers = 4,lobbyHeartbeatCooldown = 15;
+        private int maxPlayers = 8,lobbyHeartbeatCooldown = 15;
         
         public static Coroutine Heartbeat;
         

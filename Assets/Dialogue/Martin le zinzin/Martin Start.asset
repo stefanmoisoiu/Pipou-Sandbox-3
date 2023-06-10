@@ -31,14 +31,14 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: bed03b2910767704f8555c8bba6ffb63, type: 3}
     speakerImage: {fileID: 21300000, guid: 3fc45f5821a67964cb99f0f3213cb426, type: 3}
     speakerName: Gungan
-  - text: <small><shake>Me dis pas que tu connais pas squeezie..?
+  - text: <small><shake>Attends, me dis pas que tu connais pas squeezie..?
     audioType: 2
     typingSounds: []
     audioClip: {fileID: 8300000, guid: a5271fb90188b3b44af2f340695e6dc5, type: 3}
     speakerImage: {fileID: 21300000, guid: d2c222c94ab3fa3478fe78388401ce94, type: 3}
     speakerName: Martin le zinzin
-  - text: <bounce>MDR non mais les gars il connait pas squeezie, est-ce que c'est
-      bon pour vous ?!
+  - text: <bounce><speed=0.6>MDR non mais les gars il connait pas squeezie, est-ce
+      que c'est bon pour vous ?!
     audioType: 2
     typingSounds: []
     audioClip: {fileID: 8300000, guid: a07a80541d1e54f4c8493fe01e08859b, type: 3}
@@ -51,8 +51,8 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: ac2ebe2a9b8621740a8ac30694df2a50, type: 3}
     speakerImage: {fileID: 21300000, guid: d2c222c94ab3fa3478fe78388401ce94, type: 3}
     speakerName: Martin le zinzin
-  - text: <?MartinStartShopCam>Ici, tu peux echanger tes photos rigolotes de mon
-      youtubeur pref pour des accessoires.
+  - text: <?MartinStartShopCam><speed=0.6>Ici, tu peux echanger tes photos rigolotes
+      de mon youtubeur pref pour des accessoires.
     audioType: 2
     typingSounds: []
     audioClip: {fileID: 8300000, guid: 37ca6c5a53ab6b449a66db1deab3fbd2, type: 3}

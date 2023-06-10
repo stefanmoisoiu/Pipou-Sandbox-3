@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Sirenix.Utilities;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -13,48 +15,79 @@ public class PlayerSkin : NetworkBehaviour
     [SerializeField] private string selectedSkinCloudKey;
     [SerializeField] private string skinListCloudKey;
 
-    private uint currentSkin = 0;
+    public static uint CurrentSkin { get; private set; }
     private NetworkVariable<uint> currentNetworkSkin = new (writePerm: NetworkVariableWritePermission.Owner);
 
+    public static Action onStart;
     private async void Start()
     {
         if (!IsOwner) return;
         Instance = this;
         string selectedSkin = await CloudSaver.GetData(selectedSkinCloudKey);
-        if (selectedSkin == "") return;
-        SetSkin(int.Parse(selectedSkin));
+        if (!string.IsNullOrEmpty(selectedSkin)) await SetSkin(int.Parse(selectedSkin));
+        onStart?.Invoke();
     }
 
     private void Update()
     {
-        if (currentSkin != currentNetworkSkin.Value)
+        if (!IsOwner && CurrentSkin != currentNetworkSkin.Value)
         {
-            currentSkin = currentNetworkSkin.Value;
+            CurrentSkin = currentNetworkSkin.Value;
             foreach (Renderer meshRenderer in meshesToChange)
-                meshRenderer.materials[0] = skins[currentNetworkSkin.Value];
+            {
+                Material[] mats = meshRenderer.materials;
+                mats[0] = skins[currentNetworkSkin.Value];
+                meshRenderer.materials = mats;
+            }
         }
     }
 
-    public async void SetSkin(int index)
+    public async Task SetSkin(int matIndex)
     {
         foreach (Renderer meshRenderer in meshesToChange)
-            meshRenderer.materials[0] = skins[index];
-        currentNetworkSkin.Value = (uint)index;
-        await CloudSaver.SaveData(selectedSkinCloudKey, index);
+        {
+            Material[] mats = meshRenderer.materials;
+            mats[0] = skins[matIndex];
+            meshRenderer.materials = mats;
+        }
+
+        CurrentSkin = (uint)matIndex;
+        currentNetworkSkin.Value = (uint)matIndex;
+        await CloudSaver.SaveData(selectedSkinCloudKey, matIndex);
     }
-    public Material GetSkinMat(int index)
+    public Material GetSkinMat(int matIndex)
     {
-        return skins[index];
+        return skins[matIndex];
     }
-    public Texture2D GetSkinTextures(int index)
+    public Texture2D GetSkinTexture(int spriteIndex)
     {
-        return skinSprites[index];
+        return skinSprites[spriteIndex];
     }
 
-    public async Task<bool> HasSkin(int index)
+    public async void AddSkin(int matIndex)
     {
-        if (index == 0) return true;
-        string skinList = await CloudSaver.GetData(skinListCloudKey);
-        return skinList.Split(",").Contains(index.ToString());
+        int[] availableSkins = await GetAvailableSkins();
+        if (availableSkins.Contains(matIndex)) return;
+        availableSkins = (int[])availableSkins.Append(matIndex);
+        SaveAvailableSkins(availableSkins);
     }
+    public async Task<int[]> GetAvailableSkins()
+    {
+        string availableSkins = await CloudSaver.GetData(skinListCloudKey);
+        if (availableSkins == null || availableSkins == "") return new []{0};
+        return availableSkins.Split(",").Select(int.Parse).Prepend(0).ToArray();
+    }
+
+    public async void SaveAvailableSkins(int[] availableSkins)
+    {
+        string value = "";
+        for (int i = 0; i < availableSkins.Length-1; i++)
+        {
+            value += availableSkins[i] + ",";
+        }
+        value += availableSkins;
+
+        await CloudSaver.SaveData(skinListCloudKey, value);
+    }
+    public async Task<bool> HasSkin(int index) =>  (await GetAvailableSkins()).Contains(index);
 }
