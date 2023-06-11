@@ -15,14 +15,14 @@ public class PlayerRagdoll : NetworkBehaviour
     [SerializeField] private CapsuleCollider col;
     
 
-    private static readonly NetworkVariable<bool> RagdollEnabled = new (writePerm: NetworkVariableWritePermission.Owner);
+    private readonly NetworkVariable<bool> ragdollEnabled = new (writePerm: NetworkVariableWritePermission.Owner);
     public static Action<bool> onSetRagdoll;
 
     [Space]
     [SerializeField] private Transform baseArmature;
     [SerializeField] private Transform ragdollArmature;
 
-    
+    private static float stopRagdollWaitTimer;
     private void AssignBones()
     {
         ragdollLimbs = AssignChildrenBone(baseArmature, ragdollArmature).ToArray();
@@ -31,7 +31,11 @@ public class PlayerRagdoll : NetworkBehaviour
     private List<RagdollLimb> AssignChildrenBone(Transform baseBone, Transform ragdollBone)
     {
         List<RagdollLimb> lst = new();
-        for(int i = 0; i < ragdollBone.childCount; i ++) lst.AddRange(AssignChildrenBone(baseBone.GetChild(i),ragdollBone.GetChild(i)));
+        lst.Add(new RagdollLimb() {baseBone = baseBone, ragdollBone = ragdollBone});
+        for(int i = 0; i < ragdollBone.childCount; i ++)
+        {
+            lst.AddRange(AssignChildrenBone(baseBone.GetChild(i),ragdollBone.GetChild(i)));
+        }
         return lst;
     }
     private void Start()
@@ -40,6 +44,7 @@ public class PlayerRagdoll : NetworkBehaviour
         if (!IsOwner) return;
         onSetRagdoll += delegate(bool value)
         {
+            ragdollEnabled.Value = value;
             if(value) OnStartRagdoll();
             else OnStopRagdoll();
         };
@@ -49,9 +54,14 @@ public class PlayerRagdoll : NetworkBehaviour
     public static void SetRagdoll(bool value)
     {
         if (Ragdolling == value) return;
-        RagdollEnabled.Value = value;
         Ragdolling = value;
         onSetRagdoll?.Invoke(value);
+    }
+
+    public static void SetTempRagdoll(float duration)
+    {
+        SetRagdoll(true);
+        stopRagdollWaitTimer = duration;
     }
 
     private void OnStartRagdoll()
@@ -63,16 +73,24 @@ public class PlayerRagdoll : NetworkBehaviour
     {
         rb.freezeRotation = true;
         col.enabled = true;
+        rb.MovePosition(rb.position + Vector3.up);
         rb.MoveRotation(Quaternion.identity);
     }
     private void Update()
     {
         if (IsOwner && Input.GetKeyDown(KeyCode.R)) SetRagdoll(!Ragdolling);
-        if(ragdoll.activeSelf != RagdollEnabled.Value)
+        if(ragdoll.activeSelf != ragdollEnabled.Value)
         {
-            ragdoll.SetActive(RagdollEnabled.Value);
+            ragdoll.SetActive(ragdollEnabled.Value);
             SetRagdollLimbs();
-            foreach(GameObject mesh in playerMeshes) mesh.SetActive(!RagdollEnabled.Value);
+            col.enabled = !ragdollEnabled.Value;
+            foreach(GameObject mesh in playerMeshes) mesh.SetActive(!ragdollEnabled.Value);
+        }
+
+        if (IsOwner && stopRagdollWaitTimer > 0)
+        {
+            stopRagdollWaitTimer -= Time.deltaTime;
+            if(stopRagdollWaitTimer <= 0) SetRagdoll(false);
         }
     }
 

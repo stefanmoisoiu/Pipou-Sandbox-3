@@ -18,10 +18,12 @@ public class AmbienceAudio : MonoBehaviour
 
     private void Update()
     {
-        if (!playerTransform && NetworkManager.Singleton.LocalClient.PlayerObject != null)
+        if (NetworkManager.Singleton.LocalClient.PlayerObject == null) return;
+        
+        if (!playerTransform)
             playerTransform = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
         
-        if (playerTransform == null) return;
+        if (playerTransform == null ) return;
         Vector3 localPos = playerTransform.position - transform.position - center;
         
         source.volume = 0;

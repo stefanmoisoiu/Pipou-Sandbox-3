@@ -17,7 +17,8 @@ public class PlayerAnimator : NetworkBehaviour
     private NetworkVariable<ushort> currentBodyAnim = new(writePerm:NetworkVariableWritePermission.Owner);
     private NetworkVariable<ushort> currentHandAnim = new(writePerm:NetworkVariableWritePermission.Owner);
     private static string[] _bodyAnims = {"Movement","Jumping","Falling","Crouch","Slide","Dive","Wall Climb","Treadmill"};
-    private static string[] _handAnims = {"Empty Hands","Lasso Hold","Lasso Charge","Lasso Throw","Boxing"};
+    private static string[] _handAnims = {"Empty Hands","Lasso Hold","Lasso Charge","Lasso Throw","Boxing","Cross Punch"};
+    private static bool[] _handAnimsTransitionSelf = {false,false,false,false,false,true};
     private void Update()
     {
         if (IsOwner)
@@ -66,9 +67,12 @@ public class PlayerAnimator : NetworkBehaviour
     public void PlayHandAnim(int animIndex) => PlayHandAnim((ushort)animIndex);
     public void PlayHandAnim(ushort animIndex)
     {
-        if (currentHandAnimIndex == animIndex) return;
+        if (currentHandAnimIndex == animIndex && !_handAnimsTransitionSelf[animIndex]) return;
         
         animator.CrossFadeInFixedTime(_handAnims[animIndex],animTransitionDuration);
+        
+        if (_handAnimsTransitionSelf[animIndex] && currentHandAnimIndex == animIndex)
+            ForcePlayHandAnimServerRpc(animIndex);
         
         currentHandAnim.Value = animIndex;
         currentHandAnimIndex = animIndex;
@@ -91,5 +95,13 @@ public class PlayerAnimator : NetworkBehaviour
             animator.CrossFadeInFixedTime(_handAnims[currentHandAnim.Value],animTransitionDuration);
             currentHandAnimIndex = currentHandAnim.Value;
         }
+    }
+
+    [ServerRpc]
+    private void ForcePlayHandAnimServerRpc(ushort index) => ForcePlayHandAnimClientRpc(index);
+    [ClientRpc]
+    private void ForcePlayHandAnimClientRpc(ushort index)
+    {
+        animator.CrossFadeInFixedTime(_handAnims[index],animTransitionDuration);
     }
 }

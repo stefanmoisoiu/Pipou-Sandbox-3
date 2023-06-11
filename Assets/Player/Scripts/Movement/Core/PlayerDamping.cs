@@ -30,7 +30,8 @@ public class PlayerDamping : NetworkBehaviour
 
         private bool CanApplyDamping() => PlayerGrounded.IsGrounded &&
                                           PlayerJump.CanJump &&
-                                          !PlayerJump.Jumping;
+                                          !PlayerJump.Jumping &&
+                                          !PlayerRagdoll.Ragdolling;
         private void FixedUpdate()
         {
                 if (!IsOwner) return;
