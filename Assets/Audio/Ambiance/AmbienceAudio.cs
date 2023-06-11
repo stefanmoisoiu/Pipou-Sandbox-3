@@ -1,3 +1,4 @@
+using System;
 using Unity.Netcode;
 using UnityEditor;
 using UnityEngine;
@@ -7,8 +8,14 @@ public class AmbienceAudio : MonoBehaviour
     [SerializeField] private AudioSource source;
     [SerializeField] private Vector3 size, center;
     [SerializeField] private float fadeSize;
-
+    private float startVol;
     private Transform playerTransform;
+
+    private void Start()
+    {
+        startVol = source.volume;
+    }
+
     private void Update()
     {
         if (!playerTransform && NetworkManager.Singleton.LocalClient.PlayerObject != null)
@@ -34,12 +41,12 @@ public class AmbienceAudio : MonoBehaviour
                 Mathf.Clamp(localPos.y, -fadeBoxSize.y/2, fadeBoxSize.y/2),
                 Mathf.Clamp(localPos.z, -fadeBoxSize.z/2, fadeBoxSize.z/2));
             float dist = Vector3.Distance(inFadeBox + transform.position + center, playerTransform.position);
-            source.volume = 1-Mathf.Clamp01(dist*2/fadeSize);
+            source.volume = (1 - Mathf.Clamp01(dist * 2 / fadeSize))*startVol;
         }
         else
         {
             //Inside
-            source.volume = 1;
+            source.volume = startVol;
         }
     }
 #if UNITY_EDITOR
