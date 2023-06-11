@@ -23,6 +23,7 @@ public class PlayerSkin : NetworkBehaviour
     {
         if (!IsOwner) return;
         Instance = this;
+        await CloudSaver.SaveData(skinListCloudKey, "1,2,3,4,5,6,7,8,9");
         string selectedSkin = await CloudSaver.GetData(selectedSkinCloudKey);
         if (!string.IsNullOrEmpty(selectedSkin)) await SetSkin(int.Parse(selectedSkin));
         onStart?.Invoke();
