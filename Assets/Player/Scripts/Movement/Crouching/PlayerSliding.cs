@@ -60,12 +60,14 @@ public class PlayerSliding : NetworkBehaviour,IPlayerCrouchAction
     public bool CanStartAction() => PlayerGrounded.IsGrounded &&
                                     !Sliding &&
                                     Vector2.Dot(InputManager.MoveInput,Vector2.up) > 0.2f &&
-                                    !SleighItem.Sleighing;
+                                    !SleighItem.Sleighing &&
+                                    !PlayerRagdoll.Ragdolling;
 
     private bool CanPerformAction() => !SleighItem.Sleighing && 
                                        PlayerJump.CanJump &&
                                        !PlayerJump.Jumping &&
-                                       rb.velocity.magnitude >= slideStopSpeedThreshold;
+                                       rb.velocity.magnitude >= slideStopSpeedThreshold &&
+                                       !PlayerRagdoll.Ragdolling;
     public void StartAction()
     {
         Sliding = true;

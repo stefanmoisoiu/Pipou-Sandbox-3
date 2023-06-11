@@ -10,6 +10,7 @@ public class PlayerCrouchManager : NetworkBehaviour
         if (!IsOwner) return;
         InputManager.onCrouch += StartCrouchAction;
         InputManager.onStopCrouch += StopCrouchAction;
+        PlayerRagdoll.onSetRagdoll += delegate(bool value) { if(value) StopCrouchAction(); };
     }
 
     /// <summary>

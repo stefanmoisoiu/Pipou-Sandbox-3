@@ -17,7 +17,7 @@ public class PlayerAnimator : NetworkBehaviour
     private NetworkVariable<ushort> currentBodyAnim = new(writePerm:NetworkVariableWritePermission.Owner);
     private NetworkVariable<ushort> currentHandAnim = new(writePerm:NetworkVariableWritePermission.Owner);
     private static string[] _bodyAnims = {"Movement","Jumping","Falling","Crouch","Slide","Dive","Wall Climb","Treadmill"};
-    private static string[] _handAnims = {"Empty Hands","Lasso Hold","Lasso Charge","Lasso Throw"};
+    private static string[] _handAnims = {"Empty Hands","Lasso Hold","Lasso Charge","Lasso Throw","Boxing"};
     private void Update()
     {
         if (IsOwner)

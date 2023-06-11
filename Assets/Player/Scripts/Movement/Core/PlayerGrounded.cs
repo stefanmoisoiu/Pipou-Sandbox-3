@@ -34,7 +34,8 @@ public class PlayerGrounded : NetworkBehaviour
         rb.useGravity = !(IsGrounded &&
                           IsOnControllableSlope &&
                           PlayerJump.CanJump &&
-                          !SleighItem.Sleighing);
+                          !SleighItem.Sleighing &&
+                          !PlayerRagdoll.Ragdolling);
     }
     private void OnDrawGizmos()
     {

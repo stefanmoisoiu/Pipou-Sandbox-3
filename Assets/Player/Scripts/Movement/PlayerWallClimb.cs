@@ -30,6 +30,8 @@ public class PlayerWallClimb : NetworkBehaviour
         InputManager.whileJump += StartWallClimb;
         InputManager.onStopJump += delegate { StopWallClimb(true); };
         ConveyorBelt.onStartUsing += delegate { StopWallClimb(false); };
+        PlayerRagdoll.onSetRagdoll += delegate(bool value) { if(value) StopWallClimb(false); };
+        
     }
 
     private void Update()
@@ -57,7 +59,8 @@ public class PlayerWallClimb : NetworkBehaviour
                                         !WallClimbing &&
                                         !PlayerGrounded.IsGrounded &&
                                         !SleighItem.Sleighing &&
-                                        !ConveyorBelt.SuperSpeedConveyor;
+                                        !ConveyorBelt.SuperSpeedConveyor &&
+                                        !PlayerRagdoll.Ragdolling;
         
     private void StartWallClimb()
     {

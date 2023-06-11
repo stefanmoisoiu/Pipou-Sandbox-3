@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -15,7 +13,6 @@ public class PlayerItems : NetworkBehaviour
     private List<IPlayerItem> items;
     
     private int selectedItemIndex = -1;
-    public static Action onSelect, onDeselect;
     private void Start()
     {
         if (!IsOwner) return;
@@ -31,6 +28,7 @@ public class PlayerItems : NetworkBehaviour
         
         InputManager.onSelectItem += SelectItem;
         ConveyorBelt.onStartUsing += DeselectItem;
+        PlayerRagdoll.onSetRagdoll += delegate(bool value) { if(value) DeselectItem(); };
     }
 
     private void Update()

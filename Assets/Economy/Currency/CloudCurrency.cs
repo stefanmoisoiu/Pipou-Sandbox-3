@@ -39,14 +39,7 @@ public class CloudCurrency : MonoBehaviour
             List<string> idList = ids.ToList();
             idList.Add(id);
             
-            string newVal = "";
-            for (int i = 0; i < idList.Count-1; i++)
-            {
-                newVal += idList[i] + ",";
-            }
-            newVal += idList[^1];
-            
-            await CloudSaver.SaveData(currencyIdsCloudKey,newVal);
+            await CloudSaver.SaveData(currencyIdsCloudKey,CloudList.StringsToSeparatedString(idList.ToArray()));
         }
         else await CloudSaver.SaveData(currencyIdsCloudKey,id);
 

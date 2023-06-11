@@ -20,6 +20,7 @@ public class PlayerDamping : NetworkBehaviour
         {
                 if (!IsOwner) return;
                 _damping = groundNormalDamping;
+                PlayerRagdoll.onSetRagdoll += delegate(bool value) { if(value) ResetDamping(); };
         }
         
         private void Update()

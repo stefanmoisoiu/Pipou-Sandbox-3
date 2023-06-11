@@ -40,6 +40,7 @@ public class PlayerHeight : NetworkBehaviour
         if (!IsOwner) return;
         baseHeight = capsuleCollider.height;
         ConveyorBelt.onStartUsing += SetNormalHeight;
+        PlayerRagdoll.onSetRagdoll += delegate(bool value) { if(value) SetNormalHeight(); };
     }
 
     private void Update()

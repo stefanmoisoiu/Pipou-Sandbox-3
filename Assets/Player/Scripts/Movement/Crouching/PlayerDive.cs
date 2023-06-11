@@ -35,7 +35,8 @@ public class PlayerDive : NetworkBehaviour,IPlayerCrouchAction
                                     !PlayerGrounded.IsGrounded &&
                                     !PlayerWallClimb.WallClimbing &&
                                     !SleighItem.Sleighing &&
-                                    !ConveyorBelt.SuperSpeedConveyor;
+                                    !ConveyorBelt.SuperSpeedConveyor &&
+                                    !PlayerRagdoll.Ragdolling;
     public void StartAction()
     {
         Diving = true;

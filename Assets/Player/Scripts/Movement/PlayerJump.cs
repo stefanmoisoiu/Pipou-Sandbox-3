@@ -33,7 +33,8 @@ public class PlayerJump : NetworkBehaviour
     private bool CanStartJump() => CanJump &&
                                    PlayerGrounded.IsGrounded &&
                                    PlayerGrounded.IsOnControllableSlope &&
-                                   !SleighItem.Sleighing;
+                                   !SleighItem.Sleighing &&
+                                   !PlayerRagdoll.Ragdolling;
     private void Jump()
     {
         if (!CanStartJump()) return;

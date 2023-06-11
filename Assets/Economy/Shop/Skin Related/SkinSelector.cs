@@ -8,11 +8,13 @@ public class SkinSelector : MonoBehaviour
 
         private void Start()
         {
+                SetStartPreview();
                 PlayerSkin.onStart += SetStartPreview;
         }
 
         private async void SetStartPreview()
         {
+                if (PlayerSkin.Instance == null) return;
                 Debug.Log("Set Start Preview");
                 int[] availableSkins = await PlayerSkin.Instance.GetAvailableSkins();
                 for (int i = 0; i < availableSkins.Length; i++)

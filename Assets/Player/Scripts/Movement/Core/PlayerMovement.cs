@@ -29,6 +29,7 @@ public class PlayerMovement : NetworkBehaviour
                               !PlayerDive.Diving &&
                               !SleighItem.Sleighing &&
                               !PlayerSliding.Sliding &&
+                              !PlayerRagdoll.Ragdolling &&
                               !DialogueManager.Talking;
 
     public float GetMoveSpeed() => PlayerCrouch.Crouching ? crouchSpeed : walkSpeed;

@@ -18,7 +18,8 @@ public class PlayerCrouch : NetworkBehaviour,IPlayerCrouchAction
     public bool CanStartAction() => PlayerGrounded.IsGrounded &&
                                     !Crouching &&
                                     !SleighItem.Sleighing &&
-                                    !ConveyorBelt.SuperSpeedConveyor;
+                                    !ConveyorBelt.SuperSpeedConveyor &&
+                                    !PlayerRagdoll.Ragdolling;
     private bool CanPerformAction() => PlayerGrounded.IsGrounded && !SleighItem.Sleighing;
     public void StartAction()
     {
