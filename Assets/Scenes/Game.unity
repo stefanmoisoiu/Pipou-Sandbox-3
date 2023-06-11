@@ -896,8 +896,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436850292}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.4, y: 0, z: 2.2}
+  m_LocalScale: {x: 3.9356308, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 676132762}
@@ -919,14 +919,14 @@ MonoBehaviour:
   - sceneName: Starting Area
     scenePoints:
     - pointPos: {fileID: 688669633}
-      size: 100
+      size: 110
     - pointPos: {fileID: 275477240}
       size: 100
     - pointPos: {fileID: 1620946215}
       size: 150
     loaded: 0
-    showGizmos: 0
-    wireOutline: 0
+    showGizmos: 1
+    wireOutline: 1
     gizmoColor: {r: 0.13399053, g: 1, b: 0, a: 1}
   - sceneName: Swamp Area
     scenePoints:
