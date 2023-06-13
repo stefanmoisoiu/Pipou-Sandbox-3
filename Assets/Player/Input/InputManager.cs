@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,15 +11,69 @@ public class InputManager : NetworkBehaviour
 
     public static Vector2 MoveInput,LookInput;
 
-    public static Action 
+    public static ActionCallback
         onJump,whileJump,onStopJump, 
         onCrouch,whileCrouch,onStopCrouch,
         onRun,whileRun,onStopRun,
         onUse,whileUse,onStopUse;
+    public delegate void ActionCallback();
+
+    private static ActionCallback[] jump;
+    private static ActionCallback[] crouch;
+    private static ActionCallback[] run;
+    private static ActionCallback[] use;
     public static Action<int> onSelectItem;
 
     public static bool PressingJump, PressingCrouch, PressingRun,PressingUse;
 
+    public enum ActionType {Jump,Crouch,Run,Use}
+    public enum ActionAdvancement {Start,Performed,Finished}
+
+    public static void Bind(ActionCallback actionCallback,ActionType actionType, ActionAdvancement actionAdvancement)
+    {
+        switch (actionAdvancement)
+        {
+            case ActionAdvancement.Start: 
+                switch (actionType)
+                {
+                    case ActionType.Crouch: onCrouch += actionCallback;
+                    break;
+                    case ActionType.Jump: onJump += actionCallback;
+                    break;
+                    case ActionType.Run: onRun += actionCallback;
+                    break;
+                    case ActionType.Use: onUse += actionCallback;
+                    break;
+                }
+                break;
+            case ActionAdvancement.Performed: 
+                switch (actionType)
+                {
+                    case ActionType.Crouch: whileCrouch += actionCallback;
+                        break;
+                    case ActionType.Jump: whileJump += actionCallback;
+                    break;
+                    case ActionType.Run: whileRun += actionCallback;
+                    break;
+                    case ActionType.Use: whileUse += actionCallback;
+                    break;
+                }
+                break;
+            case ActionAdvancement.Finished: 
+                switch (actionType)
+                {
+                    case ActionType.Crouch: onStopCrouch += actionCallback;
+                    break;
+                    case ActionType.Jump: onStopJump += actionCallback;
+                    break;
+                    case ActionType.Run: onStopRun += actionCallback;
+                    break;
+                    case ActionType.Use: onStopUse += actionCallback;
+                    break;
+                }
+                break;
+        }
+    }
     public void Start()
     {
         if (!IsOwner) return;
@@ -64,12 +119,12 @@ public class InputManager : NetworkBehaviour
         controls.Actions.Use.started += ctx => PressingUse = true;
         controls.Actions.Use.canceled += ctx => PressingUse = false;
     }
-
     private void Update()
     {
         if(PressingJump) whileJump?.Invoke();
         if(PressingCrouch) whileCrouch?.Invoke();
         if(PressingRun) whileRun?.Invoke();
+        if(PressingUse) whileUse?.Invoke();
     }
 
     private void OnEnable()

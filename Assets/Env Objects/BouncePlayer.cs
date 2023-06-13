@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,7 +24,7 @@ public class BouncePlayer : MonoBehaviour
             if(keepApplyingVelocityCoroutine != null) StopCoroutine(keepApplyingVelocityCoroutine);
             keepApplyingVelocityCoroutine = StartCoroutine(KeepApplyingVelocity(rb,vel));
             
-            PlayerJump.SetJumping(true);
+            PJump.SetJumping(true);
             
             onBounce?.Invoke();
         }
@@ -32,17 +33,18 @@ public class BouncePlayer : MonoBehaviour
     private void OnDrawGizmos()
     {
         float mass = 1f;
-        Vector3 vel = transform.rotation * force / mass;
-        Vector3 launchPos = transform.position;
-        for (int i = 0; i < gizmoPointCount; i++)
+        List<Vector3> points = TrajectoryCalculator.GetTrajectoryPoints(
+            transform.position,
+            (transform.rotation * force).normalized,
+            force.magnitude,
+            mass,
+            gizmoPointCount,
+            gizmoPointInterval);
+        for (int i = 0; i < points.Count; i++)
         {
-            float timePassed = i * gizmoPointInterval;
-            Vector3 calculatedPosition = launchPos + vel * timePassed;
-            calculatedPosition.y =
-                launchPos.y + vel.y * timePassed + Physics.gravity.y / 2f * timePassed * timePassed;
 
-            Gizmos.color = Color.Lerp(startGizmoColor, endGizmoColor, i / (float)gizmoPointCount);
-            Gizmos.DrawSphere(calculatedPosition,0.3f);
+            Gizmos.color = Color.Lerp(startGizmoColor, endGizmoColor, i / (float)points.Count);
+            Gizmos.DrawSphere(points[i],0.3f);
         }
     }
 

@@ -37,7 +37,7 @@ public class ConveyorBelt : MonoBehaviour
         if (other.CompareTag("Player") &&
             other.GetComponent<NetworkObject>().IsOwner &&
             other.TryGetComponent(out Rigidbody rb) &&
-            other.TryGetComponent(out PlayerReferences references))
+            other.TryGetComponent(out PReferences references))
         {
             onStartUsing?.Invoke();
             if(MovePlayerCoroutine != null) StopCoroutine(MovePlayerCoroutine);
@@ -45,7 +45,7 @@ public class ConveyorBelt : MonoBehaviour
         }
     }
 
-    private IEnumerator HoldPlayer(Rigidbody rb,PlayerReferences references)
+    private IEnumerator HoldPlayer(Rigidbody rb,PReferences references)
     {
         SuperSpeedConveyor = true;
         usingThisConveyor = true;
@@ -63,7 +63,7 @@ public class ConveyorBelt : MonoBehaviour
         Quaternion startOrientationRot = references.orientation.localRotation;
         Quaternion startHeadRot = references.head.localRotation;
         
-        PlayerCamera.SetCanLook(false);
+        PCamera.SetCanLook(false);
         
         while (currentDuration < duration)
         {
@@ -83,7 +83,7 @@ public class ConveyorBelt : MonoBehaviour
         MovePlayerCoroutine = StartCoroutine(MovePlayer(rb,references));
     }
 
-    private IEnumerator MovePlayer(Rigidbody rb,PlayerReferences references)
+    private IEnumerator MovePlayer(Rigidbody rb,PReferences references)
     {
         Spline spline =
             SuperSpeedCalculator.SuperSpeedSpline(transform.position, transform.up, transform.forward,
@@ -124,8 +124,8 @@ public class ConveyorBelt : MonoBehaviour
             yield return null;
         }
         rb.rotation = Quaternion.identity;
-        PlayerCamera.SetTargetRotation(Vector2.zero);
-        PlayerCamera.SetCanLook(true);
+        PCamera.SetTargetRotation(Vector2.zero);
+        PCamera.SetCanLook(true);
     }
 
     private void ResetCanUse() => canUseConveyor = true;
@@ -137,6 +137,12 @@ public class ConveyorBelt : MonoBehaviour
                 superSpeedSpline);
         for (int i = 1; i < spline.Knots.Count(); i++)
         {
+            if (updatePathWhileUsing)
+            {
+                spline =
+                    SuperSpeedCalculator.SuperSpeedSpline(transform.position, transform.up, transform.forward,
+                        superSpeedSpline);
+            }
             BezierKnot lastKnot = spline.Knots.ElementAt(i-1);
             BezierKnot nextKnot = spline.Knots.ElementAt(i);
             Gizmos.color = Color.red;

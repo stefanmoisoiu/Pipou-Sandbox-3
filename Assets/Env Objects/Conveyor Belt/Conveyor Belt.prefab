@@ -103,7 +103,7 @@ MonoBehaviour:
   useMatSpeed: 15
   moveSpeed: 15
   canUseCooldown: 1.5
-  rotLerpSpeed: 5
+  rotLerpSpeed: 10
   endRotDuration: 0.6
   moveEaseCurve:
     serializedVersion: 2

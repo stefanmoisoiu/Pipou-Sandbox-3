@@ -63,7 +63,7 @@ public class BoxingGlovesItem : NetworkBehaviour
             rb.velocity = force;
             rb.AddForce(force, ForceMode.Impulse);
         }
-        PlayerRagdoll.SetTempRagdoll(punchRagdollDuration);
+        PRagdoll.SetTempRagdoll(punchRagdollDuration);
     }
 
     private bool IsOtherPlayerCol(Collider col)

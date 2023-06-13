@@ -11,6 +11,6 @@ public class SkinShopItem : ShopItem
         }
         private void OnBuy()
         {
-                PlayerSkin.Instance.AddSkin(skinMatIndex);
+                PSkin.Instance.AddSkin(skinMatIndex);
         }
 }

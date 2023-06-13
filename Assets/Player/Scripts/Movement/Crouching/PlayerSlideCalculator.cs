@@ -14,19 +14,19 @@ public static class PlayerSlideCalculator
                 float minSlideAngle,float maxSlideAngle,
                 float minSlideDamping, float maxSlideDamping)
         {
-                if (!PlayerGrounded.IsGrounded)
+                if (!PGrounded.IsGrounded)
                 {
-                        PlayerDamping.SetDamping(minSlideDamping);
+                        PDamping.SetDamping(minSlideDamping);
                         return;
                 }
 
-                if (!FacingDownwards(velocity,PlayerGrounded.GroundHitRaycast.normal,minVelDotValue))
+                if (!FacingDownwards(velocity,PGrounded.GroundHitRaycast.normal,minVelDotValue))
                 {
-                        PlayerDamping.SetDamping(minSlideDamping);
+                        PDamping.SetDamping(minSlideDamping);
                         return;
                 }
                 
-                float groundAngle = Vector3.Angle(PlayerGrounded.GroundHitRaycast.normal, Vector3.up);
+                float groundAngle = Vector3.Angle(PGrounded.GroundHitRaycast.normal, Vector3.up);
                 groundAngle -= minSlideAngle;
                 groundAngle = Mathf.Max(groundAngle, 0);
                 
@@ -34,7 +34,7 @@ public static class PlayerSlideCalculator
                 float targetDamping = Mathf.Lerp(minSlideDamping, maxSlideDamping, angleAdvancement);
                 
                 
-                PlayerDamping.SetDamping(targetDamping);
+                PDamping.SetDamping(targetDamping);
         }
 
         public static bool FacingDownwards(Vector3 velocity, Vector3 normal, float minDotValue)
