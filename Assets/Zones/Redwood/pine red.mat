@@ -42,7 +42,8 @@ Material:
     m_TexEnvs: []
     m_Ints: []
     m_Floats:
-    - _Wind_Strength: 5
+    - _Wind_Frequency: 0.4
+    - _Wind_Strength: 0.4
     m_Colors:
     - _Base_Color: {r: 0.5568628, g: 0.14901961, b: 0.16078432, a: 1}
   m_BuildTextureStacks: []

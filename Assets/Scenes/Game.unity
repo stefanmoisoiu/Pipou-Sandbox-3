@@ -925,8 +925,8 @@ MonoBehaviour:
     - pointPos: {fileID: 1620946215}
       size: 150
     loaded: 0
-    showGizmos: 1
-    wireOutline: 1
+    showGizmos: 0
+    wireOutline: 0
     gizmoColor: {r: 0.13399053, g: 1, b: 0, a: 1}
   - sceneName: Swamp Area
     scenePoints:
