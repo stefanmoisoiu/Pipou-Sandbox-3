@@ -14,19 +14,11 @@ public static class PMovementCalculator
 
     public static Vector3 GetFullMovementDir(Vector3 dir, Vector3 velocity,float maxControllableSpeed,out bool tooFast)
     {
-<<<<<<< Updated upstream:Assets/Player/Scripts/Movement/Core/PMovementCalculator.cs
         tooFast = false;
         Vector3 hNormal = new (PGrounded.GroundHitRaycast.normal.x,0,PGrounded.GroundHitRaycast.normal.z);
         if (PGrounded.IsGrounded &&
             !PGrounded.IsOnControllableSlope &&
             !PlayerSlideCalculator.FacingDownwards(dir,hNormal,.2f))
-=======
-        Vector3 hNormal = new (PlayerGrounded.GroundHitRaycast.normal.x,0,PlayerGrounded.GroundHitRaycast.normal.z);
-        if (PlayerGrounded.IsGrounded &&
-            !PlayerGrounded.IsOnControllableSlope &&
-            !PlayerSlideCalculator.FacingDownwards(dir,hNormal,.2f) &&
-            !ResinMovement.OnResin)
->>>>>>> Stashed changes:Assets/Player/Scripts/Movement/Core/PlayerMovementCalculator.cs
         {
             return Vector3.zero;
         }

@@ -10,7 +10,7 @@ public class PHeight : NetworkBehaviour
 {
     public enum HeightType {Normal,Crouch}
 
-    private float baseHeight,baseCenter;
+    private float baseHeight;
      
     [FoldoutGroup("Crouch Height Property")] [SerializeField] private float crouchHeight;
     
@@ -42,7 +42,6 @@ public class PHeight : NetworkBehaviour
     {
         if (!IsOwner) return;
         baseHeight = capsuleCollider.height;
-        baseCenter = capsuleCollider.center.y;
         ConveyorBelt.onStartUsing += SetNormalHeight;
         PRagdoll.onSetRagdoll += delegate(bool value) { if(value) SetNormalHeight(); };
     }
@@ -90,7 +89,7 @@ public class PHeight : NetworkBehaviour
             float deltaCenter = capsuleCollider.center.y;
             
             capsuleCollider.height = Mathf.Lerp(startCapsuleHeight,target, heightLerpEase.Evaluate(advancement));
-            capsuleCollider.center = Vector3.up * (baseHeight - Mathf.Lerp(startCapsuleHeight,target, heightLerpEase.Evaluate(advancement)))/2 + Vector3.up * baseCenter;
+            capsuleCollider.center = Vector3.up * (baseHeight - Mathf.Lerp(startCapsuleHeight,target, heightLerpEase.Evaluate(advancement)))/2;
 
             deltaHeight = capsuleCollider.height - deltaHeight;
             deltaCenter = capsuleCollider.center.y - deltaCenter;
@@ -104,7 +103,7 @@ public class PHeight : NetworkBehaviour
         }
 
         capsuleCollider.height = target;
-        capsuleCollider.center = Vector3.up * (baseCenter + (baseHeight - target) / 2);
+        capsuleCollider.center = Vector3.up * (baseHeight - target)/2;
     }
     private void OnDrawGizmos()
     {

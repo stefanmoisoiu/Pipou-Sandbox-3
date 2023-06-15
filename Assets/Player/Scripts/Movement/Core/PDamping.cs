@@ -40,13 +40,8 @@ public class PDamping : NetworkBehaviour
                 {
                         float hVel = new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude;
                         
-<<<<<<< Updated upstream:Assets/Player/Scripts/Movement/Core/PDamping.cs
                         float targetDamping = PMovement.TooFast ? groundTooFastDamping : groundNormalDamping;
                         targetDamping = PGrounded.IsOnControllableSlope ? targetDamping : 1;
-=======
-                        float targetDamping = hVel > maxMoveSpeed ? groundTooFastDamping : groundNormalDamping;
-                        targetDamping = PlayerGrounded.IsOnControllableSlope || ResinMovement.OnResin ? targetDamping : 1;
->>>>>>> Stashed changes:Assets/Player/Scripts/Movement/Core/PlayerDamping.cs
                         if (_dampLerpAdvancement < 1)
                         {
                                 _damping = Mathf.Lerp(_startLerpDamping, targetDamping,
