@@ -3,8 +3,11 @@ using Sirenix.OdinInspector;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PSlide : NetworkBehaviour,IPlayerCrouchAction
+public class PSlide : NetworkBehaviour
 {
+    [FoldoutGroup("Properties")] [SerializeField] private InputBind startSlideBind,stopSlideBind;
+    [FoldoutGroup("Properties")] [SerializeField] private ActionConditions startSlideConditions,performSlideConditions;
+    
     [FoldoutGroup("Properties")] [SerializeField]
     private float slideStopSpeedThreshold = 3,startSlideForce = 20;
     [FoldoutGroup("Properties")] [SerializeField]
@@ -33,8 +36,15 @@ public class PSlide : NetworkBehaviour,IPlayerCrouchAction
     private void Start()
     {
         if (!IsOwner) return;
+        startSlideBind.Bind();
+        stopSlideBind.Bind();
+        
+        PDive.onStopDiveCrouch += StartSlide;
+        PJump.onCrouchLand += StartSlide;
+        
+        ConveyorBelt.onStartUsing += StopSlide;
+        
         PCamFOV.AddFOV(slideFOV);
-        ConveyorBelt.onStartUsing += StopAction;
     }
 
     private void Update()
@@ -48,7 +58,7 @@ public class PSlide : NetworkBehaviour,IPlayerCrouchAction
 
         Slide();
         
-        if(!CanPerformAction()) StopAction();
+        if(rb.velocity.magnitude < slideStopSpeedThreshold || !performSlideConditions.ConditionsMet()) StopSlide();
         
         slideFOV.SetNewAmount(slideAddedFOV + rb.velocity.magnitude * slideAddedFOVPerVelocity);
     }
@@ -57,19 +67,22 @@ public class PSlide : NetworkBehaviour,IPlayerCrouchAction
     {
         PlayerSlideCalculator.ApplySlideDamping(rb.velocity,slideDampingProperties);
     }
-    public bool CanStartAction() => PGrounded.IsGrounded &&
-                                    !Sliding &&
-                                    Vector2.Dot(InputManager.MoveInput,Vector2.up) > 0.2f &&
-                                    !SItem.Sleighing &&
-                                    !PRagdoll.Ragdolling;
-
-    private bool CanPerformAction() => !SItem.Sleighing && 
-                                       PJump.CanJump &&
-                                       !PJump.Jumping &&
-                                       rb.velocity.magnitude >= slideStopSpeedThreshold &&
-                                       !PRagdoll.Ragdolling;
-    public void StartAction()
+    // public bool CanStartAction() => PGrounded.IsGrounded &&
+    //                                 !Sliding &&
+    //                                 Vector2.Dot(InputManager.MoveInput,Vector2.up) > 0.2f &&
+    //                                 !SItem.Sleighing &&
+    //                                 !PRagdoll.Ragdolling;
+    //
+    // private bool CanPerformAction() => !SItem.Sleighing && 
+    //                                    PJump.CanJump &&
+    //                                    !PJump.Jumping &&
+    //                                     &&
+    //                                    !PRagdoll.Ragdolling;
+    public void StartSlide()
     {
+        if (!startSlideConditions.ConditionsMet()) return;
+        
+        Debug.Log("Sliding");
         Sliding = true;
         pHeight.SetHeight(PHeight.HeightType.Crouch);
         slideFOV.SetNewAmount(slideAddedFOV);
@@ -84,7 +97,7 @@ public class PSlide : NetworkBehaviour,IPlayerCrouchAction
         Slide();
     }
 
-    public void StopAction()
+    public void StopSlide()
     {
         if (!Sliding) return;
         

@@ -2394,37 +2394,6 @@ MonoBehaviour:
   col: {fileID: 3617810743253563096}
   baseArmature: {fileID: 781490759190271381}
   ragdollArmature: {fileID: 3740750847965866964}
---- !u!1 &3785460996864246235
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 9207491069715712584}
-  m_Layer: 0
-  m_Name: ENV
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &9207491069715712584
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3785460996864246235}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1012748138753751628}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3897240459078446155
 GameObject:
   m_ObjectHideFlags: 0
@@ -2735,7 +2704,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1026337775092257827}
-  - component: {fileID: 5806666931616476699}
   - component: {fileID: 7223138545809875921}
   - component: {fileID: 5221385627631541774}
   - component: {fileID: 6597207794568921339}
@@ -2761,22 +2729,6 @@ Transform:
   m_Father: {fileID: 1012748138753751628}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5806666931616476699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4164122352713495861}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e61dbac22131d5a499dfd8c0a12576be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  crouchActions:
-  - {fileID: 7223138545809875921}
-  - {fileID: 5221385627631541774}
-  - {fileID: 6597207794568921339}
 --- !u!114 &7223138545809875921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2789,6 +2741,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eccd159325aa1dc46b3f2058e3a1009a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDiveBind:
+    type: 1
+    advancement: 0
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7223138545809875921}
+          m_TargetAssemblyTypeName: PDive, Assembly-CSharp
+          m_MethodName: StartDive
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  startDiveConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 9
+      value: 0
+    - conditionType: 13
+      value: 0
+    - conditionType: 14
+      value: 0
+    - conditionType: 1
+      value: 0
+    - conditionType: 5
+      value: 0
+    - conditionType: 15
+      value: 0
+    - conditionType: 12
+      value: 0
+    - conditionType: 8
+      value: 0
+  performDiveConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 9
+      value: 1
+    - conditionType: 1
+      value: 0
+    - conditionType: 5
+      value: 0
   forwardDiveForce: 9
   upDiveForce: 4.5
   diveDamping: 0.99
@@ -2830,8 +2828,7 @@ MonoBehaviour:
       m_RotationOrder: 4
   orientation: {fileID: 3608325316427101736}
   rb: {fileID: 7556380953347953475}
-  pHeight: {fileID: 0}
-  playerCrouchManager: {fileID: 5806666931616476699}
+  pHeight: {fileID: 403867809750110712}
 --- !u!114 &5221385627631541774
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2844,6 +2841,72 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0345abb3f244f268ce4cb465ebc2aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startSlideBind:
+    type: 1
+    advancement: 0
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5221385627631541774}
+          m_TargetAssemblyTypeName: PSlide, Assembly-CSharp
+          m_MethodName: StartSlide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  stopSlideBind:
+    type: 1
+    advancement: 2
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5221385627631541774}
+          m_TargetAssemblyTypeName: PSlide, Assembly-CSharp
+          m_MethodName: StopSlide
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  startSlideConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 1
+      value: 1
+    - conditionType: 17
+      value: 1
+    - conditionType: 8
+      value: 0
+    - conditionType: 14
+      value: 0
+    - conditionType: 15
+      value: 0
+    - conditionType: 13
+      value: 0
+    - conditionType: 12
+      value: 0
+  performSlideConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 4
+      value: 1
+    - conditionType: 14
+      value: 0
+    - conditionType: 15
+      value: 0
+    - conditionType: 13
+      value: 0
+    - conditionType: 12
+      value: 0
   slideStopSpeedThreshold: 2
   startSlideForce: 15
   slideDampingProperties:
@@ -2883,7 +2946,7 @@ MonoBehaviour:
   slideAddedFOVPerVelocity: 0.3
   orientation: {fileID: 3608325316427101736}
   rb: {fileID: 7556380953347953475}
-  pHeight: {fileID: 0}
+  pHeight: {fileID: 403867809750110712}
 --- !u!114 &6597207794568921339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2896,7 +2959,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b146a7b7a75b479b8c8601dc8b44c59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pHeight: {fileID: 0}
+  startCrouchBind:
+    type: 1
+    advancement: 0
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6597207794568921339}
+          m_TargetAssemblyTypeName: PCrouch, Assembly-CSharp
+          m_MethodName: StartCrouch
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  stopCrouchBind:
+    type: 1
+    advancement: 2
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6597207794568921339}
+          m_TargetAssemblyTypeName: PCrouch, Assembly-CSharp
+          m_MethodName: StopCrouch
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  startCrouchConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 1
+      value: 1
+    - conditionType: 2
+      value: 1
+    - conditionType: 15
+      value: 0
+    - conditionType: 12
+      value: 0
+    - conditionType: 7
+      value: 0
+    - conditionType: 8
+      value: 0
+  performCrouchConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 8
+      value: 0
+  pHeight: {fileID: 403867809750110712}
 --- !u!1 &4167316281445095949
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,20 +3490,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startMovementConditions:
-  - conditionType: 5
-    value: 0
-  - conditionType: 6
-    value: 0
-  - conditionType: 8
-    value: 0
-  - conditionType: 9
-    value: 0
-  - conditionType: 12
-    value: 0
-  - conditionType: 13
-    value: 0
-  - conditionType: 14
-    value: 0
+    checkType: 0
+    actionConditions:
+    - conditionType: 12
+      value: 0
+    - conditionType: 13
+      value: 0
+    - conditionType: 15
+      value: 0
+    - conditionType: 5
+      value: 0
+    - conditionType: 9
+      value: 0
+    - conditionType: 14
+      value: 0
+    - conditionType: 6
+      value: 0
+    - conditionType: 8
+      value: 0
   walkSpeed: 240
   crouchSpeed: 85
   maxControllableSpeed: 6.5
@@ -4930,8 +5053,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1012748138753751628}
   - component: {fileID: 8181249967381789336}
-  - component: {fileID: 403867809750110712}
   - component: {fileID: 4948723223826876887}
+  - component: {fileID: 403867809750110712}
   m_Layer: 0
   m_Name: Movement Scripts
   m_TagString: Untagged
@@ -4953,7 +5076,6 @@ Transform:
   m_Children:
   - {fileID: 1026337775092257827}
   - {fileID: 5978919944436804746}
-  - {fileID: 9207491069715712584}
   m_Father: {fileID: 7149259070953764658}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4969,6 +5091,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccf91c5942375ee4483544466d3b97ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startWallClimbBind:
+    type: 0
+    advancement: 1
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8181249967381789336}
+          m_TargetAssemblyTypeName: PWallClimb, Assembly-CSharp
+          m_MethodName: StartWallClimb
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  stopWallClimbBind:
+    type: 0
+    advancement: 2
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8181249967381789336}
+          m_TargetAssemblyTypeName: PWallClimb, Assembly-CSharp
+          m_MethodName: StopWallClimb
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  startWallClimbConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 1
+      value: 0
+    - conditionType: 12
+      value: 0
+    - conditionType: 14
+      value: 0
+    - conditionType: 16
+      value: 1
+    - conditionType: 15
+      value: 0
+    - conditionType: 5
+      value: 0
+  performWallClimbConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 14
+      value: 0
+    - conditionType: 15
+      value: 0
   wallClimbLength: 1
   wallClimbAngleMargin: 90
   wallClimbSpeed: 0.6
@@ -4983,7 +5163,66 @@ MonoBehaviour:
     m_Bits: 8
   feetPos: {fileID: 753234996856948632}
   rb: {fileID: 7556380953347953475}
-  pHeight: {fileID: 0}
+  pHeight: {fileID: 403867809750110712}
+--- !u!114 &4948723223826876887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7164165913806730617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 588dd8708e44b7f4b870dc4842d30160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputBind:
+    type: 0
+    advancement: 0
+    inputCallback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4948723223826876887}
+          m_TargetAssemblyTypeName: PJump, Assembly-CSharp
+          m_MethodName: Jump
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  startJumpConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 4
+      value: 1
+    - conditionType: 1
+      value: 1
+    - conditionType: 2
+      value: 1
+    - conditionType: 14
+      value: 0
+    - conditionType: 15
+      value: 0
+    - conditionType: 12
+      value: 0
+  performJumpConditions:
+    checkType: 0
+    actionConditions:
+    - conditionType: 3
+      value: 1
+    - conditionType: 14
+      value: 0
+    - conditionType: 15
+      value: 0
+    - conditionType: 1
+      value: 0
+  jumpForce: 5
+  jumpCooldown: 0.5
+  rb: {fileID: 7556380953347953475}
 --- !u!114 &403867809750110712
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5029,22 +5268,6 @@ MonoBehaviour:
     m_RotationOrder: 4
   capsuleCollider: {fileID: 3617810743253563096}
   rb: {fileID: 7556380953347953475}
---- !u!114 &4948723223826876887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7164165913806730617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 588dd8708e44b7f4b870dc4842d30160, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 5
-  jumpCooldown: 0.5
-  rb: {fileID: 7556380953347953475}
-  crouchManager: {fileID: 5806666931616476699}
 --- !u!1 &7455452303026311302
 GameObject:
   m_ObjectHideFlags: 0

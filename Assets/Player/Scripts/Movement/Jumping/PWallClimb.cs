@@ -6,6 +6,9 @@ using UnityEngine;
 
 public class PWallClimb : NetworkBehaviour
 {
+    [SerializeField] private InputBind startWallClimbBind,stopWallClimbBind;
+    
+    [SerializeField] private ActionConditions startWallClimbConditions,performWallClimbConditions;
     [SerializeField] private float
         wallClimbLength = 0.6f, wallClimbAngleMargin = 30, wallClimbSpeed = 0.1f, maxWallClimbSpeed = 4,
         startWallCheckDistance = 1,wallCheckDistance = 1.75f,
@@ -26,9 +29,10 @@ public class PWallClimb : NetworkBehaviour
     {
         if (!IsOwner) return;
         CanWallClimb = true;
-
-        InputManager.whileJump += StartWallClimb;
-        InputManager.onStopJump += delegate { StopWallClimb(true); };
+        startWallClimbBind.Bind();
+        stopWallClimbBind.Bind();
+        // InputManager.whileJump += StartWallClimb;
+        // InputManager.onStopJump += delegate { StopWallClimb(true); };
         ConveyorBelt.onStartUsing += delegate { StopWallClimb(false); };
         PRagdoll.onSetRagdoll += delegate(bool value) { if(value) StopWallClimb(false); };
         
@@ -50,21 +54,21 @@ public class PWallClimb : NetworkBehaviour
         if(!Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, wallCheckDistance,
                groundMask)) StopWallClimb(true);
         
-        if(CanStopWallClimb()) StopWallClimb(true);
+        if(currentWallClimbDuration > wallClimbLength || !performWallClimbConditions.ConditionsMet()) StopWallClimb(true);
     }
 
-    private bool CanStopWallClimb() => currentWallClimbDuration > wallClimbLength ||
-                                       SItem.Sleighing;
-    private bool CanStartWallClimb() => CanWallClimb &&
-                                        !WallClimbing &&
-                                        !PGrounded.IsGrounded &&
-                                        !SItem.Sleighing &&
-                                        !ConveyorBelt.SuperSpeedConveyor &&
-                                        !PRagdoll.Ragdolling;
+    // private bool CanStopWallClimb() => currentWallClimbDuration > wallClimbLength ||
+    //                                    SItem.Sleighing;
+    // private bool CanStartWallClimb() => CanWallClimb &&
+    //                                     !WallClimbing &&
+    //                                     !PGrounded.IsGrounded &&
+    //                                     !SItem.Sleighing &&
+    //                                     !ConveyorBelt.SuperSpeedConveyor &&
+    //                                     !PRagdoll.Ragdolling;
         
-    private void StartWallClimb()
+    public void StartWallClimb()
     {
-        if (!CanStartWallClimb()) return;
+        if (!startWallClimbConditions.ConditionsMet()) return;
         if (!Physics.Raycast(feetPos.position, feetPos.forward, out RaycastHit hit, startWallCheckDistance,groundMask)) return;
         if (Vector3.Angle(new Vector3(hit.normal.x, 0, hit.normal.z).normalized, hit.normal) >
             wallClimbAngleMargin / 2) return;

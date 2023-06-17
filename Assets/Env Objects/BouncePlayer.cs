@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
@@ -7,7 +8,8 @@ using UnityEngine.Events;
 public class BouncePlayer : MonoBehaviour
 {
     [SerializeField] private Vector3 force;
-    [SerializeField] private UnityEvent onBounce;
+    [SerializeField] private UnityEvent uOnBounce;
+    public static Action onBounce;
     [SerializeField] private int gizmoPointCount;
     [SerializeField] private float gizmoPointInterval = 0.5f;
     [SerializeField] private Color startGizmoColor = Color.red,endGizmoColor = Color.green;
@@ -24,8 +26,7 @@ public class BouncePlayer : MonoBehaviour
             if(keepApplyingVelocityCoroutine != null) StopCoroutine(keepApplyingVelocityCoroutine);
             keepApplyingVelocityCoroutine = StartCoroutine(KeepApplyingVelocity(rb,vel));
             
-            PJump.SetJumping(true);
-            
+            uOnBounce?.Invoke();
             onBounce?.Invoke();
         }
     }

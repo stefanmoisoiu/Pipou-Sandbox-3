@@ -11,64 +11,64 @@ public class InputManager : NetworkBehaviour
 
     public static Vector2 MoveInput,LookInput;
 
-    public static ActionCallback
+    public static InputCallback
         onJump,whileJump,onStopJump, 
         onCrouch,whileCrouch,onStopCrouch,
         onRun,whileRun,onStopRun,
         onUse,whileUse,onStopUse;
-    public delegate void ActionCallback();
+    public delegate void InputCallback();
 
-    private static ActionCallback[] jump;
-    private static ActionCallback[] crouch;
-    private static ActionCallback[] run;
-    private static ActionCallback[] use;
+    private static InputCallback[] jump;
+    private static InputCallback[] crouch;
+    private static InputCallback[] run;
+    private static InputCallback[] use;
     public static Action<int> onSelectItem;
 
     public static bool PressingJump, PressingCrouch, PressingRun,PressingUse;
 
-    public enum ActionType {Jump,Crouch,Run,Use}
-    public enum ActionAdvancement {Start,Performed,Finished}
+    public enum InputType {Jump,Crouch,Run,Use}
+    public enum InputAdvancement {Start,Performed,Finished}
 
-    public static void Bind(ActionCallback actionCallback,ActionType actionType, ActionAdvancement actionAdvancement)
+    public static void Bind(InputCallback inputCallback,InputType inputType, InputAdvancement inputAdvancement)
     {
-        switch (actionAdvancement)
+        switch (inputAdvancement)
         {
-            case ActionAdvancement.Start: 
-                switch (actionType)
+            case InputAdvancement.Start: 
+                switch (inputType)
                 {
-                    case ActionType.Crouch: onCrouch += actionCallback;
+                    case InputType.Crouch: onCrouch += inputCallback;
                     break;
-                    case ActionType.Jump: onJump += actionCallback;
+                    case InputType.Jump: onJump += inputCallback;
                     break;
-                    case ActionType.Run: onRun += actionCallback;
+                    case InputType.Run: onRun += inputCallback;
                     break;
-                    case ActionType.Use: onUse += actionCallback;
+                    case InputType.Use: onUse += inputCallback;
                     break;
                 }
                 break;
-            case ActionAdvancement.Performed: 
-                switch (actionType)
+            case InputAdvancement.Performed: 
+                switch (inputType)
                 {
-                    case ActionType.Crouch: whileCrouch += actionCallback;
+                    case InputType.Crouch: whileCrouch += inputCallback;
                         break;
-                    case ActionType.Jump: whileJump += actionCallback;
+                    case InputType.Jump: whileJump += inputCallback;
                     break;
-                    case ActionType.Run: whileRun += actionCallback;
+                    case InputType.Run: whileRun += inputCallback;
                     break;
-                    case ActionType.Use: whileUse += actionCallback;
+                    case InputType.Use: whileUse += inputCallback;
                     break;
                 }
                 break;
-            case ActionAdvancement.Finished: 
-                switch (actionType)
+            case InputAdvancement.Finished: 
+                switch (inputType)
                 {
-                    case ActionType.Crouch: onStopCrouch += actionCallback;
+                    case InputType.Crouch: onStopCrouch += inputCallback;
                     break;
-                    case ActionType.Jump: onStopJump += actionCallback;
+                    case InputType.Jump: onStopJump += inputCallback;
                     break;
-                    case ActionType.Run: onStopRun += actionCallback;
+                    case InputType.Run: onStopRun += inputCallback;
                     break;
-                    case ActionType.Use: onStopUse += actionCallback;
+                    case InputType.Use: onStopUse += inputCallback;
                     break;
                 }
                 break;

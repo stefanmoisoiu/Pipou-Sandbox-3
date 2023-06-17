@@ -4,40 +4,38 @@ using UnityEngine;
 
 public class PJump : NetworkBehaviour
 {
+    [SerializeField] private InputBind inputBind;
+    [SerializeField] private ActionConditions startJumpConditions,performJumpConditions;
+    
     [SerializeField] private float jumpForce= 5, jumpCooldown = 0.2f;
     
-
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private PlayerCrouchManager crouchManager;
     public static bool Jumping { get; private set; }
     public static bool CanJump { get; private set; }
 
-    public static Action onJump;
+    public static Action onJump,onCrouchLand;
     private void Start()
     {
+        if (!IsOwner) return;
         CanJump = true;
-        if (IsOwner) InputManager.onJump += Jump;
+        inputBind.Bind();
+        BouncePlayer.onBounce += delegate { Jumping = true; };
     }
 
     private void Update()
     {
         if (!IsOwner) return;
-        if (Jumping && PGrounded.IsGrounded && CanJump)
-        {
-            Jumping = false;
-            if(InputManager.PressingCrouch) crouchManager.StartCrouchAction();
-            onJump?.Invoke();
-        }
+        if (!performJumpConditions.ConditionsMet()) StopJump();
     }
 
-    private bool CanStartJump() => CanJump &&
-                                   PGrounded.IsGrounded &&
-                                   PGrounded.IsOnControllableSlope &&
-                                   !SItem.Sleighing &&
-                                   !PRagdoll.Ragdolling;
-    private void Jump()
+    // private bool CanStartJump() => CanJump &&
+    //                                PGrounded.IsGrounded &&
+    //                                PGrounded.IsOnControllableSlope &&
+    //                                !SItem.Sleighing &&
+    //                                !PRagdoll.Ragdolling;
+    public void Jump()
     {
-        if (!CanStartJump()) return;
+        if (!startJumpConditions.ConditionsMet()) return;
         CanJump = false;
         Invoke(nameof(ResetJumpCooldown),jumpCooldown);
         rb.velocity = new Vector3(rb.velocity.x, jumpForce, rb.velocity.z);
@@ -45,9 +43,11 @@ public class PJump : NetworkBehaviour
         onJump?.Invoke();
     }
 
-    public static void SetJumping(bool value)
+    private void StopJump()
     {
-        Jumping = value;
+        if (!Jumping || CanJump == false) return;
+        Jumping = false;
+        if(InputManager.PressingCrouch) onCrouchLand?.Invoke();
     }
     private void ResetJumpCooldown() => CanJump = true;
 }

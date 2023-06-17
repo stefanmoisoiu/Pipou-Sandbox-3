@@ -2,8 +2,11 @@ using System;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PDive : NetworkBehaviour,IPlayerCrouchAction
+public class PDive : NetworkBehaviour
 {
+    [SerializeField] private InputBind startDiveBind;
+    [SerializeField] private ActionConditions startDiveConditions,performDiveConditions;
+    
     [SerializeField] private float forwardDiveForce,upDiveForce;
     [Range(0,1)] [SerializeField]
     private float diveDamping = 0.975f;
@@ -15,12 +18,13 @@ public class PDive : NetworkBehaviour,IPlayerCrouchAction
 
     [SerializeField]private Rigidbody rb;
     [SerializeField]private PHeight pHeight;
-    [SerializeField]private PlayerCrouchManager playerCrouchManager;
 
     public static bool Diving { get; private set; }
-
+    public static Action onStopDive,onStopDiveCrouch;
     private void Start()
     {
+        if (!IsOwner) return;
+        startDiveBind.Bind();
         ConveyorBelt.onStartUsing += StopDive;
         PWallClimb.onStartWallClimb += StopDive;
     }
@@ -29,16 +33,18 @@ public class PDive : NetworkBehaviour,IPlayerCrouchAction
     {
         if (!IsOwner) return;
         if(Diving) PDamping.SetDamping(diveDamping);
-        if (Diving && PGrounded.IsGrounded && PGrounded.IsOnControllableSlope) StopDive();
+        if (!performDiveConditions.ConditionsMet()) StopDive();
+        // if (Diving && PGrounded.IsGrounded && PGrounded.IsOnControllableSlope) StopDive();
     }
-    public bool CanStartAction() => !Diving &&
-                                    !PGrounded.IsGrounded &&
-                                    !PWallClimb.WallClimbing &&
-                                    !SItem.Sleighing &&
-                                    !ConveyorBelt.SuperSpeedConveyor &&
-                                    !PRagdoll.Ragdolling;
-    public void StartAction()
+    // public bool CanStartAction() => !Diving &&
+    //                                 !PGrounded.IsGrounded &&
+    //                                 !PWallClimb.WallClimbing &&
+    //                                 !SItem.Sleighing &&
+    //                                 !ConveyorBelt.SuperSpeedConveyor &&
+    //                                 !PRagdoll.Ragdolling;
+    public void StartDive()
     {
+        if (!startDiveConditions.ConditionsMet()) return;
         Diving = true;
         PDamping.SetDamping(diveDamping); 
         PCamFOV.AddFOV(PCamFOV.FadingFOV.Copy(diveFOV));
@@ -46,18 +52,14 @@ public class PDive : NetworkBehaviour,IPlayerCrouchAction
         
         rb.velocity = orientation.forward * forwardDiveForce + orientation.up * upDiveForce;
     }
-
-    public void StopAction()
-    {
-        //Stopping key press doesnt stop dive
-    }
     
-    public void StopDive()
+    private void StopDive()
     {
         if (!Diving) return;
         Diving = false;
         PDamping.ResetDamping();
         pHeight.SetHeight(PHeight.HeightType.Normal);
-        if(InputManager.PressingCrouch) playerCrouchManager.StartCrouchAction();
+        onStopDive?.Invoke();
+        if(InputManager.PressingCrouch) onStopDiveCrouch?.Invoke();
     }
 }

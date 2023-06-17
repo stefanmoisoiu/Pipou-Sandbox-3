@@ -1,36 +1,53 @@
 ﻿using System;
 using Sirenix.OdinInspector;
-using Unity.Netcode;
 using UnityEngine;
 
-public abstract class PlayerMovement : NetworkBehaviour
+[Serializable]
+public struct ActionConditions
 {
-    [SerializeField] private MovementCondition[] startMovementConditions;
-
-    internal bool CanStartMovement()
+    public enum ConditionCheckType {And,Or}
+    [SerializeField] private ConditionCheckType checkType;
+    
+    [SerializeField] private ActionCondition[] actionConditions;
+        
+    public bool ConditionsMet()
     {
-        foreach (MovementCondition movementCondition in startMovementConditions)
+        if (checkType == ConditionCheckType.And)
         {
-            if (!movementCondition.ConditionMet()) return false;
+            foreach (ActionCondition actionCondition in actionConditions) if (!actionCondition.ConditionMet()) return false;
+            return true;
         }
-
-        return true;
+        else if (checkType == ConditionCheckType.Or)
+        {
+            foreach (ActionCondition actionCondition in actionConditions) if (actionCondition.ConditionMet()) return true;
+            return false;
+        }
+        Debug.LogError("Condition Type Not Found");
+        return false;
     }
 }
-
 [Serializable]
-public struct MovementCondition
+public struct ActionCondition
 {
     public enum ConditionType {
         TooFast,
-        IsGrounded, IsOnControllableGround,
-        Jumping,CanJump,
-        WallClimbing,WallClimbPushing,
-        Crouching,Sliding,Diving,
-        NormalHeight,CrouchHeight,
+        IsGrounded,
+        IsOnControllableGround,
+        Jumping,
+        CanJump,
+        WallClimbing,
+        WallClimbPushing,
+        Crouching,
+        Sliding,
+        Diving,
+        NormalHeight,
+        CrouchHeight,
         Ragdolling,
         Talking,
-        Sleighing
+        Sleighing,
+        UsingConveyorBelt,
+        CanWallClimb,
+        MovingForward
     }
 
     [HorizontalGroup("H")] public ConditionType conditionType;
@@ -41,6 +58,7 @@ public struct MovementCondition
         switch (conditionType)
         {
             case ConditionType.TooFast: return PMovement.TooFast == value;
+            case ConditionType.MovingForward: return PMovement.MovingForward == value;
             
             case ConditionType.IsGrounded: return PGrounded.IsGrounded == value;
             case ConditionType.IsOnControllableGround: return PGrounded.IsOnControllableSlope == value;
@@ -50,6 +68,7 @@ public struct MovementCondition
             
             case ConditionType.WallClimbing: return PWallClimb.WallClimbing == value;
             case ConditionType.WallClimbPushing: return PWallClimb.WallClimbPushing == value;
+            case ConditionType.CanWallClimb: return PWallClimb.CanWallClimb == value;
             
             case ConditionType.Crouching: return PCrouch.Crouching == value;
             
@@ -65,6 +84,8 @@ public struct MovementCondition
             case ConditionType.Talking: return DialogueManager.Talking == value;
             
             case ConditionType.Sleighing: return SItem.Sleighing == value;
+            
+            case ConditionType.UsingConveyorBelt: return ConveyorBelt.SuperSpeedConveyor == value;
         }
         Debug.LogError("Could not find Condition");
         return false;

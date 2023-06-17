@@ -2,8 +2,9 @@ using Sirenix.OdinInspector;
 using Unity.Netcode;
 using UnityEngine;
 
-public class PMovement : PlayerMovement
+public class PMovement : NetworkBehaviour
 {
+    [SerializeField] private ActionConditions startMovementConditions;
     
     
     [FoldoutGroup("Ground Properties")][SerializeField] private float walkSpeed=150,crouchSpeed = 85;
@@ -16,11 +17,14 @@ public class PMovement : PlayerMovement
     [FoldoutGroup("References")]
     [SerializeField]private Rigidbody rb;
     public static bool TooFast { get; private set; }
+    public static bool MovingForward { get; private set; }
     private void FixedUpdate()
     {
         if (!IsOwner) return;
+        
+        if (startMovementConditions.ConditionsMet()) MovePlayer();
 
-        if (CanStartMovement()) MovePlayer();
+        MovingForward = Vector2.Dot(InputManager.MoveInput, Vector2.up) > 0f;
     }
 
     // private bool CanMove() => !PlayerWallClimb.WallClimbing &&
