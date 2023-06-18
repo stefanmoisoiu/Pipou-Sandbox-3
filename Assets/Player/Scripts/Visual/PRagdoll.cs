@@ -1,22 +1,25 @@
 using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using Unity.Netcode;
 using UnityEngine;
 
+// [ExecuteAlways]
 public class PRagdoll : NetworkBehaviour
 {
+    [SerializeField] private float testForce;
+    
     [SerializeField] private GameObject[] playerMeshes;
     [SerializeField] private GameObject ragdoll;
     [SerializeField] private RagdollLimb[] ragdollLimbs;
-    
+
 
     [SerializeField] private Rigidbody rb;
     [SerializeField] private CapsuleCollider col;
     
 
-    private readonly NetworkVariable<bool> ragdollEnabled = new (writePerm: NetworkVariableWritePermission.Owner);
     public static Action<bool> onSetRagdoll;
+    public static Action<Vector3> onStartRagdoll;
+    public static Action onStopRagdoll;
 
     [Space]
     [SerializeField] private Transform baseArmature;
@@ -31,7 +34,8 @@ public class PRagdoll : NetworkBehaviour
     private List<RagdollLimb> AssignChildrenBone(Transform baseBone, Transform ragdollBone)
     {
         List<RagdollLimb> lst = new();
-        lst.Add(new RagdollLimb() {baseBone = baseBone, ragdollBone = ragdollBone});
+        if (ragdollBone.TryGetComponent(out Rigidbody ragdollRb))
+            lst.Add(new RagdollLimb {baseBone = baseBone, ragdollBone = ragdollBone, ragdollRb = ragdollRb});
         for(int i = 0; i < ragdollBone.childCount; i ++)
         {
             lst.AddRange(AssignChildrenBone(baseBone.GetChild(i),ragdollBone.GetChild(i)));
@@ -42,69 +46,99 @@ public class PRagdoll : NetworkBehaviour
     {
         AssignBones();
         if (!IsOwner) return;
-        onSetRagdoll += delegate(bool value)
+        onStartRagdoll += delegate(Vector3 force)
         {
-            ragdollEnabled.Value = value;
-            if(value) OnStartRagdoll();
-            else OnStopRagdoll();
+            OnStartRagdoll(force);
+            OnStartRagdollServerRpc(force);
+        };
+        onStopRagdoll += delegate
+        {
+            OnStopRagdoll();
+            OnStopRagdollServerRpc();
         };
     }
     public static bool Ragdolling { get; private set; }
 
-    public static void SetRagdoll(bool value)
+    public static void StartRagdoll(Vector3 force)
     {
-        if (Ragdolling == value) return;
-        Ragdolling = value;
-        onSetRagdoll?.Invoke(value);
+        if (Ragdolling) return;
+        Ragdolling = true;
+        onStartRagdoll?.Invoke(force);
+        onSetRagdoll?.Invoke(true);
+    }
+    public static void StopRagdoll()
+    {
+        if (!Ragdolling) return;
+        Ragdolling = false;
+        onStopRagdoll?.Invoke();
+        onSetRagdoll?.Invoke(false);
     }
 
-    public static void SetTempRagdoll(float duration)
+    public static void SetTempRagdoll(float duration,Vector3 force)
     {
-        SetRagdoll(true);
+        StartRagdoll(force);
         stopRagdollWaitTimer = duration;
     }
 
-    private void OnStartRagdoll()
+    [ServerRpc] private void OnStartRagdollServerRpc(Vector3 force) => OnStartRagdollClientRpc(force);
+    [ClientRpc] private void OnStartRagdollClientRpc(Vector3 force) {if(!IsOwner) OnStartRagdoll(force);}
+    private void OnStartRagdoll(Vector3 force)
     {
-        rb.freezeRotation = false;
+        ragdoll.SetActive(true);
+        SetRagdollLimbs(force);
+        foreach(GameObject mesh in playerMeshes) mesh.SetActive(false);
+        rb.isKinematic = true;
         col.enabled = false;
+        if (IsOwner) PCamera.SetCurrentCam(PCamera.CamType.TPSCam);
     }
+    
+    [ServerRpc] private void OnStopRagdollServerRpc() => OnStopRagdollClientRpc();
+    [ClientRpc] private void OnStopRagdollClientRpc() {if (!IsOwner) OnStopRagdoll();}
     private void OnStopRagdoll()
     {
-        rb.freezeRotation = true;
+        ragdoll.SetActive(false);
         col.enabled = true;
-        rb.MovePosition(rb.position + Vector3.up);
+        rb.isKinematic = false;
+        foreach(GameObject mesh in playerMeshes) mesh.SetActive(true);
         rb.MoveRotation(Quaternion.identity);
+        rb.MovePosition(ragdoll.transform.GetChild(0).GetChild(0).position + Vector3.up);
+        if (IsOwner) PCamera.SetCurrentCam(PCamera.CamType.FPSCam);
     }
     private void Update()
     {
-        if (IsOwner && Input.GetKeyDown(KeyCode.R)) SetRagdoll(!Ragdolling);
-        if(ragdoll.activeSelf != ragdollEnabled.Value)
+        if (!IsOwner) return;
+        if (Input.GetKeyDown(KeyCode.R))
         {
-            ragdoll.SetActive(ragdollEnabled.Value);
-            SetRagdollLimbs();
-            col.enabled = !ragdollEnabled.Value;
-            foreach(GameObject mesh in playerMeshes) mesh.SetActive(!ragdollEnabled.Value);
+            if (Ragdolling) StopRagdoll();
+            else StartRagdoll(Vector3.up * testForce);
         }
 
-        if (IsOwner && stopRagdollWaitTimer > 0)
+        if (stopRagdollWaitTimer > 0)
         {
             stopRagdollWaitTimer -= Time.deltaTime;
-            if(stopRagdollWaitTimer <= 0) SetRagdoll(false);
+            if(stopRagdollWaitTimer <= 0) StopRagdoll();
         }
     }
 
-    private void SetRagdollLimbs()
+    private void SetRagdollLimbs(Vector3 force)
     {
         for (int i = 0; i < ragdollLimbs.Length; i++)
         {
-            ragdollLimbs[i].ragdollBone.rotation = ragdollLimbs[i].baseBone.rotation;
-            ragdollLimbs[i].ragdollBone.position = ragdollLimbs[i].baseBone.position;
+            if(ragdollLimbs[i].ragdollRb != null)
+            {
+                ragdollLimbs[i].ragdollRb.position = ragdollLimbs[i].baseBone.position;
+                ragdollLimbs[i].ragdollRb.rotation = ragdollLimbs[i].baseBone.rotation;
+                ragdollLimbs[i].ragdollRb.angularVelocity = Vector3.zero;
+                ragdollLimbs[i].ragdollRb.velocity = force;
+            }
+            else
+                ragdollLimbs[i].ragdollBone.SetPositionAndRotation(ragdollLimbs[i].baseBone.position,ragdollLimbs[i].baseBone.rotation);
         }
     }
     [Serializable]
     public class RagdollLimb
     {
         public Transform baseBone, ragdollBone;
+        public Rigidbody ragdollRb;
     }
 }

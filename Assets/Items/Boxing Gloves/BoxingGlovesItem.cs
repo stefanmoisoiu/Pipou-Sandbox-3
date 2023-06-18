@@ -13,7 +13,6 @@ public class BoxingGlovesItem : NetworkBehaviour
     [SerializeField] private LayerMask playerLayer;
     [SerializeField] private float punchCheckSize;
     [SerializeField] private Transform orientation;
-    [SerializeField] private Rigidbody[] rbs;
     [SerializeField] private UnityEvent onPunch;
     
     private bool canPunch = true;
@@ -58,12 +57,7 @@ public class BoxingGlovesItem : NetworkBehaviour
     [ClientRpc]
     private void ApplyPunchClientRpc(Vector3 force,ClientRpcParams rpcParams)
     {
-        foreach(Rigidbody rb in rbs)
-        {
-            rb.velocity = force;
-            rb.AddForce(force, ForceMode.Impulse);
-        }
-        PRagdoll.SetTempRagdoll(punchRagdollDuration);
+        PRagdoll.SetTempRagdoll(punchRagdollDuration,force);
     }
 
     private bool IsOtherPlayerCol(Collider col)

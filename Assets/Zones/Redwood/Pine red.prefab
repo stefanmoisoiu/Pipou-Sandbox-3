@@ -188,7 +188,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2630149589265414069
 Transform:
@@ -305,6 +305,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pine Leaves (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -410,6 +415,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pine Leaves (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -439,6 +449,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FallingLeaves 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5326273804191621568, guid: 071410f310a737e439317409efd6dedf,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 5326273804191621570, guid: 071410f310a737e439317409efd6dedf,
         type: 3}
@@ -614,6 +629,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pine Leaves (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -724,6 +744,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pine Leaves (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -828,6 +853,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pine Leaves
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -939,6 +969,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pine Leaves (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1048,6 +1083,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pine Leaves (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eda9566d9424fa4f9d110b9feff562a,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

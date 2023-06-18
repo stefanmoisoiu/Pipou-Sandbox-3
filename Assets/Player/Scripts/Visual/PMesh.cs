@@ -18,4 +18,12 @@ public class PMesh : NetworkBehaviour
         if (IsOwner && !forceShowMesh) bodyMesh.shadowCastingMode = ShadowCastingMode.ShadowsOnly;
         if (IsOwner) character.transform.position -= Vector3.forward * ownerMoveCharacter;
     }
+
+    private void Update()
+    {
+        if (!IsOwner) return;
+        bodyMesh.shadowCastingMode = forceShowMesh || PCamera.Cam == PCamera.CamType.TPSCam
+            ? ShadowCastingMode.On
+            : ShadowCastingMode.ShadowsOnly;
+    }
 }

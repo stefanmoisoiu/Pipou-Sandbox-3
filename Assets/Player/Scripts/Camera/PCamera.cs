@@ -13,31 +13,48 @@ public class PCamera : NetworkBehaviour
         [FoldoutGroup("References")] [SerializeField]
         private Transform orientation,head,headCam;
 
+        [FoldoutGroup("References")] [SerializeField]
+        private CinemachineVirtualCamera fpsCam;
+        [FoldoutGroup("References")] [SerializeField]
+        private CinemachineFreeLook tpsCam;
+
+        public enum CamType {FPSCam,TPSCam}
+
+        public static CamType Cam { get; private set; }
+        public static void SetCurrentCam(CamType camType) => Cam = camType;
         public static Vector2 TargetRotation { get; private set; }
         public static void SetTargetRotation(Vector2 value) => TargetRotation = value;
         public static bool CanLook { get; private set; }
         public static void SetCanLook(bool value) => CanLook = value;
         private void Start()
         {
-                CanLook = true;
                 if (IsOwner)
                 {
+                        CanLook = true;
                         Cursor.lockState = CursorLockMode.Locked;
                         Cursor.visible = true;
                         Camera.main.transform.position = headCam.position;
-                }
-                else
-                {
-                        headCam.GetComponent<CinemachineVirtualCamera>().Priority = -100;
                 }
         }
 
         private void Update()
         {
-                if(IsOwner && CanLook) Look();
+                if (!IsOwner) return;
+                switch (Cam)
+                {
+                        case CamType.FPSCam:
+                                fpsCam.Priority = 10;
+                                tpsCam.Priority = -100;
+                                if(CanLook) FPSLook();
+                                break;
+                        case CamType.TPSCam:
+                                fpsCam.Priority = -100;
+                                tpsCam.Priority = 10;
+                                break;
+                }
         }
 
-        private void Look()
+        private void FPSLook()
         {
                 TargetRotation = new Vector2(
                         TargetRotation.x + InputManager.LookInput.x * sensitivity / 5, 

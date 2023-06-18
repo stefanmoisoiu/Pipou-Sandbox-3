@@ -63,6 +63,7 @@ public class ConveyorBelt : MonoBehaviour
         Quaternion startOrientationRot = references.orientation.localRotation;
         Quaternion startHeadRot = references.head.localRotation;
         
+        PCamera.SetCurrentCam(PCamera.CamType.TPSCam);
         PCamera.SetCanLook(false);
         
         while (currentDuration < duration)
@@ -125,6 +126,7 @@ public class ConveyorBelt : MonoBehaviour
         }
         rb.rotation = Quaternion.identity;
         PCamera.SetTargetRotation(Vector2.zero);
+        PCamera.SetCurrentCam(PCamera.CamType.FPSCam);
         PCamera.SetCanLook(true);
     }
 
