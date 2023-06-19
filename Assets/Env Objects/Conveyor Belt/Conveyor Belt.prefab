@@ -64,7 +64,7 @@ Transform:
   - {fileID: 721042770003713957}
   - {fileID: 4755810483895446583}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &2374121861650046814
 BoxCollider:
@@ -131,7 +131,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   updatePathWhileUsing: 0
   playerHoldPos: {fileID: 721042770003713957}
-  renderer: {fileID: 5929873658262935384}
+  meshRenderer: {fileID: 5929873658262935384}
   superSpeedSpline:
     rayCheckLength: 2
     yOffset: 1

@@ -23,12 +23,13 @@ public class PGrounded : NetworkBehaviour
     private void CheckGrounded()
     {
         IsGrounded = Physics.Raycast(
-            transform.position + col.center - Vector3.up * col.height/2 + Vector3.up * 0.1f,
+            transform.position + col.center * transform.root.localScale.x,
             -transform.up,
             out RaycastHit groundHit,
-            groundCheckRayLength, 
+            groundCheckRayLength * Mathf.Min(transform.root.localScale.x,1) + col.height / 2  * transform.root.localScale.x, 
             whatIsGround);
         IsOnControllableSlope = PMovementCalculator.CanControlMovement(groundHit.normal, maxAngle);
+        Debug.Log(IsGrounded);
         
         if (IsGrounded) GroundHitRaycast = groundHit;
         rb.useGravity = !(IsGrounded &&
@@ -40,7 +41,7 @@ public class PGrounded : NetworkBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Vector3 startPos = transform.position + col.center - Vector3.up * col.height / 2 + Vector3.up * 0.1f;
-        Gizmos.DrawLine(startPos,startPos + -transform.up * groundCheckRayLength);
+        Vector3 startPos = transform.position + col.center * transform.root.localScale.x;
+        Gizmos.DrawLine(startPos,startPos -transform.up * col.height / 2 * transform.root.localScale.x -transform.up * groundCheckRayLength * Mathf.Min(transform.root.localScale.x,1));
     }
 }

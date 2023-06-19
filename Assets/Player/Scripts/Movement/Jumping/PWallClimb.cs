@@ -69,7 +69,7 @@ public class PWallClimb : NetworkBehaviour
     public void StartWallClimb()
     {
         if (!startWallClimbConditions.ConditionsMet()) return;
-        if (!Physics.Raycast(feetPos.position, feetPos.forward, out RaycastHit hit, startWallCheckDistance,groundMask)) return;
+        if (!Physics.Raycast(feetPos.position, feetPos.forward, out RaycastHit hit, startWallCheckDistance * transform.localScale.magnitude,groundMask)) return;
         if (Vector3.Angle(new Vector3(hit.normal.x, 0, hit.normal.z).normalized, hit.normal) >
             wallClimbAngleMargin / 2) return;
         onStartWallClimb?.Invoke();
@@ -92,7 +92,7 @@ public class PWallClimb : NetworkBehaviour
     }
     private void WallClimbPush()
     {
-        if (Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, wallCheckDistance, groundMask))
+        if (Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, wallCheckDistance * transform.localScale.magnitude, groundMask))
         {
             rb.velocity = hit.normal * wallPushHSpeed + Vector3.up * wallPushVSpeed;
             PDamping.SetDamping(1);

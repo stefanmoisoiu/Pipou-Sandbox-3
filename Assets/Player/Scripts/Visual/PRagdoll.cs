@@ -46,7 +46,7 @@ public class PRagdoll : NetworkBehaviour
     }
     private void Start()
     {
-        AssignBones();
+        // AssignBones();
         if (!IsOwner) return;
         onStartRagdoll += delegate(Vector3 force)
         {
@@ -98,12 +98,13 @@ public class PRagdoll : NetworkBehaviour
     [ClientRpc] private void OnStopRagdollClientRpc() {if (!IsOwner) OnStopRagdoll();}
     private void OnStopRagdoll()
     {
-        ragdoll.SetActive(false);
         col.enabled = true;
         rb.isKinematic = false;
         foreach(GameObject mesh in playerMeshes) mesh.SetActive(true);
-        rb.transform.rotation = Quaternion.identity;
-        rb.transform.position = hip.position + Vector3.up;
+        rb.MoveRotation(Quaternion.identity);
+        rb.MovePosition(hip.position + Vector3.up);
+        hip.localPosition = Vector3.zero;
+        ragdoll.SetActive(false);
         if (IsOwner) PCamera.SetCurrentCam(PCamera.CamType.FPSCam);
     }
     private void Update()

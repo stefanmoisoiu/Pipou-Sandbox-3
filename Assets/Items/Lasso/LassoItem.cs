@@ -11,6 +11,7 @@ public class LassoItem : NetworkBehaviour
 
     private ulong defaultLassoHitTargetValue = 999;
     private NetworkVariable<ulong> lassoHitTarget = new(999);
+    private LassoItem lassoedOwnerLassoItem;
     
 
     private GameObject lassoInstance;
@@ -34,6 +35,8 @@ public class LassoItem : NetworkBehaviour
         {
             lassoLine.SetPosition(1, NetworkManager.Singleton.SpawnManager.SpawnedObjects[lassoHitTarget.Value].transform.position);
         }
+
+        if (IsOwner && lassoedOwnerLassoItem != null && lassoedOwnerLassoItem.lassoHitTarget.Value != NetworkObjectId) ReleaseFromLassoVictimServerRpc();
     }
 
     public void Select()
@@ -51,6 +54,7 @@ public class LassoItem : NetworkBehaviour
         RetractLasso();
     }
 
+    #region Charge and Throw
     private void ChargeLasso()
     {
         if (!HoldingLasso || ChargingLasso) return;
@@ -74,7 +78,9 @@ public class LassoItem : NetworkBehaviour
                 { Receive = new ServerRpcReceiveParams { SenderClientId = NetworkManager.Singleton.LocalClientId } });
         onThrow?.Invoke();
     }
+    #endregion
 
+    #region Lasso Object
     [ServerRpc]
     private void CreateLassoObjectServerRpc(Vector3 pos, Vector3 throwDir, ServerRpcParams rpcParams)
     {
@@ -105,18 +111,15 @@ public class LassoItem : NetworkBehaviour
     [ClientRpc]
     private void DeleteLassoObjectClientRpc() =>
         lassoInstance = null;
-
+    #endregion
+    
+    #region Check Hit By Lasso
     private void OnTriggerEnter(Collider col)
     {
         if (!IsOwner) return;
         CheckHitByLasso(col);
     }
-    [ServerRpc(RequireOwnership = false)]
-    private void HitTargetServerRpc(ulong value)
-    {
-        lassoHitTarget.Value = value;
-        DeleteLassoObjectServerRpc();
-    }
+
     public void CheckHitByLasso(Collider col)
     {
         if (!col.CompareTag("Lasso Instance") || Lassoed || !col.TryGetComponent(out NetworkObject lassoNetworkObject) || lassoNetworkObject.IsOwner) return;
@@ -126,33 +129,56 @@ public class LassoItem : NetworkBehaviour
         CheckHitByLassoServerRpc(lassoNetworkObject);
         Debug.Log("Hit by lasso");
     }
-    [ServerRpc]
-    private void CheckHitByLassoServerRpc(NetworkObjectReference lassoRef) =>
-        NetworkManager.SpawnManager.GetPlayerNetworkObject(
-                NetworkManager.SpawnManager.SpawnedObjects[lassoRef.NetworkObjectId].OwnerClientId)
-            .GetComponent<PReferences>().lassoItem.HitTargetServerRpc(NetworkObjectId);
-    [ClientRpc]
-    private void ReleaseFromLassoVictimClientRpc(ClientRpcParams rpcParams)
-    {
-        if (!Lassoed) return;
-        Lassoed = false;
-        PCamera.SetCurrentCam(PCamera.CamType.FPSCam);
-        onStopLassoed?.Invoke();
-        Debug.Log("Released from lasso");
-    }
 
+    [ServerRpc]
+    private void CheckHitByLassoServerRpc(NetworkObjectReference lassoRef)
+    {
+        lassoedOwnerLassoItem = NetworkManager
+            .SpawnManager
+            .GetPlayerNetworkObject(
+                NetworkManager
+                    .SpawnManager
+                    .SpawnedObjects[lassoRef.NetworkObjectId]
+                    .OwnerClientId)
+            .GetComponent<PReferences>().lassoItem;
+        lassoedOwnerLassoItem.HitTargetOwnerServerRpc(NetworkObjectId);
+    }
+    
+    [ServerRpc(RequireOwnership = false)]
+    private void HitTargetOwnerServerRpc(ulong value)
+    {
+        lassoHitTarget.Value = value;
+        DeleteLassoObjectServerRpc();
+    }
+    #endregion
+
+    #region Release Lassoed
     [ServerRpc(RequireOwnership = false)]
     private void ReleaseFromLassoVictimServerRpc()
     {
         ReleaseFromLassoVictimClientRpc(
             new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new[] { OwnerClientId } } });
     }
+    [ClientRpc] private void ReleaseFromLassoVictimClientRpc(ClientRpcParams rpcParams) => ReleaseFromLassoVictim();
+    private void ReleaseFromLassoVictim()
+    {
+        if (!Lassoed) return;
+        lassoedOwnerLassoItem = null;
+        Lassoed = false;
+        PCamera.SetCurrentCam(PCamera.CamType.FPSCam);
+        onStopLassoed?.Invoke();
+        Debug.Log("Released from lasso");
+    }
+    
+    
     [ServerRpc]
     private void ReleaseFromLassoOwnerServerRpc() =>
         lassoHitTarget.Value = defaultLassoHitTargetValue;
+    #endregion
+
+    #region Retract Lasso
     private void RetractLasso()
     {
-        if (!LassoThrown) return;
         DeleteLassoObjectServerRpc();
         if (lassoHitTarget.Value != defaultLassoHitTargetValue)
             NetworkManager
@@ -162,7 +188,9 @@ public class LassoItem : NetworkBehaviour
                 .lassoItem
                 .ReleaseFromLassoVictimServerRpc();
         ReleaseFromLassoOwnerServerRpc();
+        if (!LassoThrown) return;
         LassoThrown = false;
         onRetract?.Invoke();
     }
+    #endregion
 }
