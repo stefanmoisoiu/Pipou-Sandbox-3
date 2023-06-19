@@ -14,7 +14,7 @@ public class ConveyorBelt : MonoBehaviour
     [SerializeField] private bool updatePathWhileUsing;
     
     [SerializeField] private Transform playerHoldPos;
-    [SerializeField] private Renderer renderer;
+    [SerializeField] private Renderer meshRenderer;
     private float startMatRotSpeed;
 
     [SerializeField] private SuperSpeedCalculator.SuperSpeedProperties superSpeedSpline;
@@ -28,7 +28,7 @@ public class ConveyorBelt : MonoBehaviour
 
     private void Start()
     {
-        startMatRotSpeed = renderer.materials[1].GetFloat(Speed);
+        startMatRotSpeed = meshRenderer.materials[1].GetFloat(Speed);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,7 +52,7 @@ public class ConveyorBelt : MonoBehaviour
         rb.isKinematic = true;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        renderer.materials[1].SetFloat(Speed,useMatSpeed);
+        meshRenderer.materials[1].SetFloat(Speed,useMatSpeed);
         
         float duration = holdDuration;
         float currentDuration = 0;
@@ -79,7 +79,7 @@ public class ConveyorBelt : MonoBehaviour
             yield return null;
         }
         usingThisConveyor = false;
-        renderer.materials[1].SetFloat(Speed,startMatRotSpeed);
+        meshRenderer.materials[1].SetFloat(Speed,startMatRotSpeed);
         Invoke(nameof(ResetCanUse),canUseCooldown);
         MovePlayerCoroutine = StartCoroutine(MovePlayer(rb,references));
     }

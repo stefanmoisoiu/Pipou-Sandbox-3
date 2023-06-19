@@ -5,4 +5,5 @@ using UnityEngine;
 public class PReferences : MonoBehaviour
 {
     public Transform orientation,head;
+    public LassoItem lassoItem;
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PItems : NetworkBehaviour
 {
+    [SerializeField] private ActionConditions holdItemConditions;
+    
     [SerializeField] private BaseItem testItem;
     [SerializeField] private BaseItem testItem2;
     [SerializeField] private BaseItem testItem3;
@@ -27,17 +29,20 @@ public class PItems : NetworkBehaviour
         if(testItem3 != null) AddItemAtEnd(testItem3);
         
         InputManager.onSelectItem += SelectItem;
-        ConveyorBelt.onStartUsing += DeselectItem;
-        PRagdoll.onSetRagdoll += delegate(bool value) { if(value) DeselectItem(); };
+        // ConveyorBelt.onStartUsing += DeselectItem;
+        // PRagdoll.onSetRagdoll += delegate(bool value) { if(value) DeselectItem(); };
     }
 
     private void Update()
     {
+        if (!IsOwner) return;
+        if(!holdItemConditions.ConditionsMet()) DeselectItem();
         if(selectedItemIndex != -1) items[selectedItemIndex].UpdateSelected();
     }
 
     public void SelectItem(int index)
     {
+        if (!holdItemConditions.ConditionsMet()) return;
         if (selectedItemIndex != -1)
         {
             uiItems[selectedItemIndex].UIDeselected();
@@ -83,7 +88,7 @@ public class PItems : NetworkBehaviour
         uiItems[index].SetPreview(item.PreviewSprite);
     }
 
-    public void DeselectItem()
+    private void DeselectItem()
     {
         if (selectedItemIndex == -1) return;
         uiItems[selectedItemIndex].UIDeselected();

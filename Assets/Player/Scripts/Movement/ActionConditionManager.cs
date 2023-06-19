@@ -47,7 +47,10 @@ public struct ActionCondition
         Sleighing,
         UsingConveyorBelt,
         CanWallClimb,
-        MovingForward
+        MovingForward,
+        LassoThrown,
+        Lassoed,
+        ChargingLasso
     }
 
     [HorizontalGroup("H")] public ConditionType conditionType;
@@ -86,6 +89,10 @@ public struct ActionCondition
             case ConditionType.Sleighing: return SItem.Sleighing == value;
             
             case ConditionType.UsingConveyorBelt: return ConveyorBelt.SuperSpeedConveyor == value;
+            
+            case ConditionType.ChargingLasso: return LassoItem.ChargingLasso == value;
+            case ConditionType.LassoThrown: return LassoItem.LassoThrown == value;
+            case ConditionType.Lassoed: return LassoItem.Lassoed == value;
         }
         Debug.LogError("Could not find Condition");
         return false;

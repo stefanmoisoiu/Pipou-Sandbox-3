@@ -21,7 +21,7 @@ public class AmbienceAudio : MonoBehaviour
         if (NetworkManager.Singleton.LocalClient.PlayerObject == null) return;
         
         if (!playerTransform)
-            playerTransform = NetworkManager.Singleton.LocalClient.PlayerObject.transform;
+            playerTransform = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().transform;
         
         if (playerTransform == null ) return;
         Vector3 localPos = playerTransform.position - transform.position - center;

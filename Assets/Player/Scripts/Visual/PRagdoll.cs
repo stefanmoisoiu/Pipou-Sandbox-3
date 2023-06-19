@@ -11,6 +11,8 @@ public class PRagdoll : NetworkBehaviour
     [SerializeField] private GameObject[] playerMeshes;
     [SerializeField] private GameObject ragdoll;
     [SerializeField] private RagdollLimb[] ragdollLimbs;
+    [SerializeField] private Transform hip;
+    
 
 
     [SerializeField] private Rigidbody rb;
@@ -100,8 +102,8 @@ public class PRagdoll : NetworkBehaviour
         col.enabled = true;
         rb.isKinematic = false;
         foreach(GameObject mesh in playerMeshes) mesh.SetActive(true);
-        rb.MoveRotation(Quaternion.identity);
-        rb.MovePosition(ragdoll.transform.GetChild(0).GetChild(0).position + Vector3.up);
+        rb.transform.rotation = Quaternion.identity;
+        rb.transform.position = hip.position + Vector3.up;
         if (IsOwner) PCamera.SetCurrentCam(PCamera.CamType.FPSCam);
     }
     private void Update()

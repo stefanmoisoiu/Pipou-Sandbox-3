@@ -57,7 +57,6 @@ public class PhysicsPlacer : EditorWindow
         GUILayout.Label("Position",subtitleStyle);
         EditorGUILayout.BeginHorizontal();
         _placeYOffset = EditorGUILayout.Slider(_placeYOffset,-5,5);
-        _placeYOffset = _placeYOffset;
         EditorGUILayout.EndHorizontal();
         
         GUILayout.Space(20);
@@ -66,7 +65,6 @@ public class PhysicsPlacer : EditorWindow
         _rotateRandomlyAroundAxis = EditorGUILayout.ToggleLeft("Rotate randomly around axis",_rotateRandomlyAroundAxis);
         EditorGUILayout.BeginHorizontal();
         _faceNormal = EditorGUILayout.ToggleLeft("Face normal",_faceNormal,GUILayout.Width(100));
-        _faceNormal = _faceNormal;
         GUILayout.Label("Up Direction");
         _upDir = EditorGUILayout.EnumPopup(_upDir);
         EditorGUILayout.EndHorizontal();
