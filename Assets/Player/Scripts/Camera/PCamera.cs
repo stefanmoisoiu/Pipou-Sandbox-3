@@ -8,10 +8,19 @@ public class PCamera : NetworkBehaviour
 {
         [FoldoutGroup("Properties")] [SerializeField]
         private float sensitivity = 1,minHeadAngle = 90,maxHeadAngle = 90,rotLerpSpeed = 10;
+        
+        [FoldoutGroup("FPS Cam Move Looking Down")] [SerializeField]
+        private float lookDownStartAngle,lookDownMoveAmount;
+        [FoldoutGroup("FPS Cam Move Looking Up")] [SerializeField]
+        private float lookUpStartAngle,lookUpMoveAmount;
+
+        
 
         
         [FoldoutGroup("References")] [SerializeField]
         private Transform orientation,head,headCam;
+
+        private Vector3 startHeadCamPos;
 
         [FoldoutGroup("References")] [SerializeField]
         private CinemachineVirtualCamera fpsCam;
@@ -34,6 +43,7 @@ public class PCamera : NetworkBehaviour
                         Cursor.lockState = CursorLockMode.Locked;
                         Cursor.visible = true;
                         Camera.main.transform.position = headCam.position;
+                        startHeadCamPos = headCam.localPosition;
                 }
         }
 
@@ -45,6 +55,7 @@ public class PCamera : NetworkBehaviour
                         case CamType.FPSCam:
                                 fpsCam.Priority = 10;
                                 tpsCam.Priority = -100;
+                                FPSCamMoveLooking();
                                 if(CanLook) FPSLook();
                                 break;
                         case CamType.TPSCam:
@@ -69,5 +80,20 @@ public class PCamera : NetworkBehaviour
                         head.localRotation,
                         Quaternion.Euler(new Vector3(-TargetRotation.y, 0, 0)),
                         rotLerpSpeed * Time.deltaTime);
+        }
+
+        private void FPSCamMoveLooking()
+        {
+                if (TargetRotation.y < -lookDownStartAngle)
+                {
+                        float advancement = -(TargetRotation.y + lookDownStartAngle) / (minHeadAngle - lookDownStartAngle);
+                        headCam.position = head.position + startHeadCamPos + headCam.forward * (lookDownMoveAmount * advancement);
+                }
+                else if (TargetRotation.y > lookUpStartAngle)
+                {
+                        float advancement = (TargetRotation.y - lookUpStartAngle) / (maxHeadAngle - lookUpStartAngle);
+                        headCam.position = head.position + startHeadCamPos - orientation.forward * (lookUpMoveAmount * advancement);
+                }
+                else headCam.localPosition = startHeadCamPos;
         }
 }

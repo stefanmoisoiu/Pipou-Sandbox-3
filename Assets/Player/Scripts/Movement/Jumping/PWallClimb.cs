@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -17,6 +16,8 @@ public class PWallClimb : NetworkBehaviour
     [SerializeField] private LayerMask groundMask;
     private float currentWallClimbDuration = 0;
     [SerializeField] private Transform feetPos;
+    [SerializeField] private CapsuleCollider col;
+    
     public static bool WallClimbing { get; private set; }
     public static bool WallClimbPushing { get; private set; }
     public static bool CanWallClimb { get; private set; }
@@ -51,7 +52,7 @@ public class PWallClimb : NetworkBehaviour
         rb.velocity = new Vector3(0, Mathf.Min(rb.velocity.y + wallClimbSpeed,maxWallClimbSpeed),0);
         currentWallClimbDuration += Time.fixedDeltaTime;
         
-        if(!Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, wallCheckDistance,
+        if(!Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, col.radius * transform.root.localScale.x + wallCheckDistance,
                groundMask)) StopWallClimb(true);
         
         if(currentWallClimbDuration > wallClimbLength || !performWallClimbConditions.ConditionsMet()) StopWallClimb(true);
@@ -69,7 +70,7 @@ public class PWallClimb : NetworkBehaviour
     public void StartWallClimb()
     {
         if (!startWallClimbConditions.ConditionsMet()) return;
-        if (!Physics.Raycast(feetPos.position, feetPos.forward, out RaycastHit hit, startWallCheckDistance * transform.localScale.magnitude,groundMask)) return;
+        if (!Physics.Raycast(feetPos.position, feetPos.forward, out RaycastHit hit, col.radius * transform.root.localScale.x + startWallCheckDistance,groundMask)) return;
         if (Vector3.Angle(new Vector3(hit.normal.x, 0, hit.normal.z).normalized, hit.normal) >
             wallClimbAngleMargin / 2) return;
         onStartWallClimb?.Invoke();
@@ -92,7 +93,7 @@ public class PWallClimb : NetworkBehaviour
     }
     private void WallClimbPush()
     {
-        if (Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, wallCheckDistance * transform.localScale.magnitude, groundMask))
+        if (Physics.Raycast(feetPos.position, feetPos.forward,out RaycastHit hit, col.radius * transform.root.localScale.x + wallCheckDistance, groundMask))
         {
             rb.velocity = hit.normal * wallPushHSpeed + Vector3.up * wallPushVSpeed;
             PDamping.SetDamping(1);

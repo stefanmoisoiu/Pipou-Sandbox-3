@@ -29,7 +29,6 @@ public class PGrounded : NetworkBehaviour
             groundCheckRayLength * Mathf.Min(transform.root.localScale.x,1) + col.height / 2  * transform.root.localScale.x, 
             whatIsGround);
         IsOnControllableSlope = PMovementCalculator.CanControlMovement(groundHit.normal, maxAngle);
-        Debug.Log(IsGrounded);
         
         if (IsGrounded) GroundHitRaycast = groundHit;
         rb.useGravity = !(IsGrounded &&

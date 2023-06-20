@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
 public class PAnimator : NetworkBehaviour
 {
@@ -9,6 +10,9 @@ public class PAnimator : NetworkBehaviour
     [SerializeField]private Animator animator;
     [SerializeField] private float animMoveLerpSpeed = 15,animTransitionDuration = 0.15f;
     private Vector2 animMoveInput;
+
+    [SerializeField] private Rig armLookRig;
+    
 
     private ushort currentBodyAnimIndex,currentHandAnimIndex;
     private NetworkVariable<float> targetMovementX = new(writePerm:NetworkVariableWritePermission.Owner);
@@ -75,6 +79,9 @@ public class PAnimator : NetworkBehaviour
         if (_handAnimsTransitionSelf[animIndex] && currentHandAnimIndex == animIndex)
             ForcePlayHandAnimServerRpc(animIndex);
         
+        armLookRig.weight = animIndex != 0 ? 1 : 0;
+        animator.SetLayerWeight(1,animIndex != 0 ? 1 : 0);
+        
         currentHandAnim.Value = animIndex;
         currentHandAnimIndex = animIndex;
     }
@@ -95,6 +102,7 @@ public class PAnimator : NetworkBehaviour
         {
             animator.CrossFadeInFixedTime(_handAnims[currentHandAnim.Value],animTransitionDuration);
             currentHandAnimIndex = currentHandAnim.Value;
+            animator.SetLayerWeight(1,currentHandAnim.Value != 0 ? 1 : 0);
         }
     }
 
