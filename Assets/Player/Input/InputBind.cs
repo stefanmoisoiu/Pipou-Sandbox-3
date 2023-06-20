@@ -9,6 +9,7 @@ public struct InputBind
     public UnityEvent inputCallback;
 
     public void Bind() => InputManager.Bind(CallCallback,type,advancement);
+    public void UnBind() => InputManager.UnBind(CallCallback,type,advancement);
 
     private void CallCallback() => inputCallback?.Invoke();
 }

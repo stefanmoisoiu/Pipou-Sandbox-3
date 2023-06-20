@@ -15,18 +15,20 @@ public class InputManager : NetworkBehaviour
         onJump,whileJump,onStopJump, 
         onCrouch,whileCrouch,onStopCrouch,
         onRun,whileRun,onStopRun,
-        onUse,whileUse,onStopUse;
+        onUse,whileUse,onStopUse,
+        onSecondaryUse,whileSecondaryUse,onStopSecondaryUse;
     public delegate void InputCallback();
 
     private static InputCallback[] jump;
     private static InputCallback[] crouch;
     private static InputCallback[] run;
     private static InputCallback[] use;
+    private static InputCallback[] secondaryUse;
     public static Action<int> onSelectItem;
 
-    public static bool PressingJump, PressingCrouch, PressingRun,PressingUse;
+    public static bool PressingJump, PressingCrouch, PressingRun,PressingUse,PressingSecondaryUse;
 
-    public enum InputType {Jump,Crouch,Run,Use}
+    public enum InputType {Jump,Crouch,Run,Use,SecondaryUse}
     public enum InputAdvancement {Start,Performed,Finished}
 
     public static void Bind(InputCallback inputCallback,InputType inputType, InputAdvancement inputAdvancement)
@@ -36,40 +38,67 @@ public class InputManager : NetworkBehaviour
             case InputAdvancement.Start: 
                 switch (inputType)
                 {
-                    case InputType.Crouch: onCrouch += inputCallback;
-                    break;
-                    case InputType.Jump: onJump += inputCallback;
-                    break;
-                    case InputType.Run: onRun += inputCallback;
-                    break;
-                    case InputType.Use: onUse += inputCallback;
-                    break;
+                    case InputType.Crouch: onCrouch += inputCallback; break;
+                    case InputType.Jump: onJump += inputCallback; break;
+                    case InputType.Run: onRun += inputCallback; break;
+                    case InputType.Use: onUse += inputCallback; break;
+                    case InputType.SecondaryUse: onSecondaryUse += inputCallback; break;
                 }
                 break;
             case InputAdvancement.Performed: 
                 switch (inputType)
                 {
-                    case InputType.Crouch: whileCrouch += inputCallback;
-                        break;
-                    case InputType.Jump: whileJump += inputCallback;
-                    break;
-                    case InputType.Run: whileRun += inputCallback;
-                    break;
-                    case InputType.Use: whileUse += inputCallback;
-                    break;
+                    case InputType.Crouch: whileCrouch += inputCallback; break;
+                    case InputType.Jump: whileJump += inputCallback; break;
+                    case InputType.Run: whileRun += inputCallback; break;
+                    case InputType.Use: whileUse += inputCallback; break;
+                    case InputType.SecondaryUse: whileSecondaryUse += inputCallback; break;
                 }
                 break;
             case InputAdvancement.Finished: 
                 switch (inputType)
                 {
-                    case InputType.Crouch: onStopCrouch += inputCallback;
-                    break;
-                    case InputType.Jump: onStopJump += inputCallback;
-                    break;
-                    case InputType.Run: onStopRun += inputCallback;
-                    break;
-                    case InputType.Use: onStopUse += inputCallback;
-                    break;
+                    case InputType.Crouch: onStopCrouch += inputCallback; break;
+                    case InputType.Jump: onStopJump += inputCallback; break;
+                    case InputType.Run: onStopRun += inputCallback; break;
+                    case InputType.Use: onStopUse += inputCallback; break;
+                    case InputType.SecondaryUse: onStopSecondaryUse += inputCallback; break;
+                }
+                break;
+        }
+    }
+    public static void UnBind(InputCallback inputCallback,InputType inputType, InputAdvancement inputAdvancement)
+    {
+        switch (inputAdvancement)
+        {
+            case InputAdvancement.Start: 
+                switch (inputType)
+                {
+                    case InputType.Crouch: onCrouch -= inputCallback; break;
+                    case InputType.Jump: onJump -= inputCallback; break;
+                    case InputType.Run: onRun -= inputCallback; break;
+                    case InputType.Use: onUse -= inputCallback; break;
+                    case InputType.SecondaryUse: onSecondaryUse -= inputCallback; break;
+                }
+                break;
+            case InputAdvancement.Performed: 
+                switch (inputType)
+                {
+                    case InputType.Crouch: whileCrouch -= inputCallback; break;
+                    case InputType.Jump: whileJump -= inputCallback; break;
+                    case InputType.Run: whileRun -= inputCallback; break;
+                    case InputType.Use: whileUse -= inputCallback; break;
+                    case InputType.SecondaryUse: whileSecondaryUse -= inputCallback; break;
+                }
+                break;
+            case InputAdvancement.Finished: 
+                switch (inputType)
+                {
+                    case InputType.Crouch: onStopCrouch -= inputCallback; break;
+                    case InputType.Jump: onStopJump -= inputCallback; break;
+                    case InputType.Run: onStopRun -= inputCallback; break;
+                    case InputType.Use: onStopUse -= inputCallback; break;
+                    case InputType.SecondaryUse: onStopSecondaryUse -= inputCallback; break;
                 }
                 break;
         }
@@ -118,6 +147,13 @@ public class InputManager : NetworkBehaviour
         
         controls.Actions.Use.started += ctx => PressingUse = true;
         controls.Actions.Use.canceled += ctx => PressingUse = false;
+        
+        controls.Actions.SecondaryUse.started += ctx => onSecondaryUse?.Invoke();
+        controls.Actions.SecondaryUse.performed += ctx => whileSecondaryUse?.Invoke();
+        controls.Actions.SecondaryUse.canceled += ctx => onStopSecondaryUse?.Invoke();
+        
+        controls.Actions.SecondaryUse.started += ctx => PressingSecondaryUse = true;
+        controls.Actions.SecondaryUse.canceled += ctx => PressingSecondaryUse = false;
     }
     private void Update()
     {
@@ -125,6 +161,7 @@ public class InputManager : NetworkBehaviour
         if(PressingCrouch) whileCrouch?.Invoke();
         if(PressingRun) whileRun?.Invoke();
         if(PressingUse) whileUse?.Invoke();
+        if(PressingSecondaryUse) whileSecondaryUse?.Invoke();
     }
 
     private void OnEnable()

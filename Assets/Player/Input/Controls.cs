@@ -220,7 +220,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""da767c44-cfa8-4df4-972e-51a0503fb490"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -265,6 +265,15 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""name"": ""Use"",
                     ""type"": ""Button"",
                     ""id"": ""697a1a17-0856-4652-bdc5-21a67926e914"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Secondary Use"",
+                    ""type"": ""Button"",
+                    ""id"": ""8bda17ac-3fc3-4137-bd66-b8d352c96c88"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -319,11 +328,33 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5cf290fb-6cbd-42e7-add0-d5ffad270108"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3fe3dc8-cddc-4c31-afcb-7d18a1a95451"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Secondary Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a87f52e8-79fb-4037-96a1-0d640d7a5783"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Secondary Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -345,6 +376,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Actions_Item2 = m_Actions.FindAction("Item 2", throwIfNotFound: true);
         m_Actions_Item3 = m_Actions.FindAction("Item 3", throwIfNotFound: true);
         m_Actions_Use = m_Actions.FindAction("Use", throwIfNotFound: true);
+        m_Actions_SecondaryUse = m_Actions.FindAction("Secondary Use", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -488,6 +520,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Actions_Item2;
     private readonly InputAction m_Actions_Item3;
     private readonly InputAction m_Actions_Use;
+    private readonly InputAction m_Actions_SecondaryUse;
     public struct ActionsActions
     {
         private @Controls m_Wrapper;
@@ -496,6 +529,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         public InputAction @Item2 => m_Wrapper.m_Actions_Item2;
         public InputAction @Item3 => m_Wrapper.m_Actions_Item3;
         public InputAction @Use => m_Wrapper.m_Actions_Use;
+        public InputAction @SecondaryUse => m_Wrapper.m_Actions_SecondaryUse;
         public InputActionMap Get() { return m_Wrapper.m_Actions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -517,6 +551,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Use.started += instance.OnUse;
             @Use.performed += instance.OnUse;
             @Use.canceled += instance.OnUse;
+            @SecondaryUse.started += instance.OnSecondaryUse;
+            @SecondaryUse.performed += instance.OnSecondaryUse;
+            @SecondaryUse.canceled += instance.OnSecondaryUse;
         }
 
         private void UnregisterCallbacks(IActionsActions instance)
@@ -533,6 +570,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             @Use.started -= instance.OnUse;
             @Use.performed -= instance.OnUse;
             @Use.canceled -= instance.OnUse;
+            @SecondaryUse.started -= instance.OnSecondaryUse;
+            @SecondaryUse.performed -= instance.OnSecondaryUse;
+            @SecondaryUse.canceled -= instance.OnSecondaryUse;
         }
 
         public void RemoveCallbacks(IActionsActions instance)
@@ -564,5 +604,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnItem2(InputAction.CallbackContext context);
         void OnItem3(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
+        void OnSecondaryUse(InputAction.CallbackContext context);
     }
 }

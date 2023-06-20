@@ -21,8 +21,8 @@ public class PAnimator : NetworkBehaviour
     private NetworkVariable<ushort> currentBodyAnim = new(writePerm:NetworkVariableWritePermission.Owner);
     private NetworkVariable<ushort> currentHandAnim = new(writePerm:NetworkVariableWritePermission.Owner);
     private static string[] _bodyAnims = {"Movement","Jumping","Falling","Crouch","Slide","Dive","Wall Climb","Treadmill","Tied"};
-    private static string[] _handAnims = {"Empty Hands","Lasso Hold","Lasso Charge","Lasso Throw","Boxing","Cross Punch","Scaling Tool Show"};
-    private static bool[] _handAnimsTransitionSelf = {false,false,false,false,false,true,false};
+    private static string[] _handAnims = {"Empty Hands","Lasso Hold","Lasso Charge","Lasso Throw","Boxing","Cross Punch","Scaling Tool Show","Hold Big Magnet"};
+    private static bool[] _handAnimsTransitionSelf = {false,false,false,false,false,true,false,false};
     private void Update()
     {
         if (IsOwner)

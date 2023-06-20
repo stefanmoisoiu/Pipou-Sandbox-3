@@ -8,6 +8,8 @@ using UnityEngine.Events;
 
 public class BoxingGlovesItem : NetworkBehaviour
 {
+    [SerializeField] private InputBind punchBind;
+    
     [SerializeField] private float punchForce,punchRagdollDuration,punchCooldown;
     [SerializeField] private Transform punchCheckPos;
     [SerializeField] private LayerMask playerLayer;
@@ -19,15 +21,15 @@ public class BoxingGlovesItem : NetworkBehaviour
     
     public void Select()
     {
-        InputManager.onUse += Punch;
+        punchBind.Bind();
     }
 
     public void Deselect()
     {
-        InputManager.onUse -= Punch;
+        punchBind.UnBind();
     }
 
-    private void Punch()
+    public void Punch()
     {
         if (!canPunch) return;
         onPunch?.Invoke();

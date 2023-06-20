@@ -4,6 +4,8 @@ using UnityEngine.Events;
 
 public class LassoItem : NetworkBehaviour
 {
+    [SerializeField] private InputBind startLassoBind,releaseLassoBind;
+    
     [SerializeField] private LineRenderer lassoLine;
     [SerializeField] private GameObject lassoPrefab;
     [SerializeField] private Transform throwPos, lassoHoldPos;
@@ -42,20 +44,24 @@ public class LassoItem : NetworkBehaviour
     public void Select()
     {
         HoldingLasso = true;
-        InputManager.onUse += ChargeLasso;
-        InputManager.onStopUse += ThrowLasso;
+        startLassoBind.Bind();
+        releaseLassoBind.Bind();
+        // InputManager.onUse += ChargeLasso;
+        // InputManager.onStopUse += ThrowLasso;
     }
 
     public void Deselect()
     {
         HoldingLasso = false;
-        InputManager.onUse -= ChargeLasso;
-        InputManager.onStopUse -= ThrowLasso;
+        startLassoBind.UnBind();
+        releaseLassoBind.UnBind();
+        // InputManager.onUse -= ChargeLasso;
+        // InputManager.onStopUse -= ThrowLasso;
         RetractLasso();
     }
 
     #region Charge and Throw
-    private void ChargeLasso()
+    public void ChargeLasso()
     {
         if (!HoldingLasso || ChargingLasso) return;
         if (LassoThrown)
@@ -68,7 +74,7 @@ public class LassoItem : NetworkBehaviour
         onCharge?.Invoke();
     }
 
-    private void ThrowLasso()
+    public void ThrowLasso()
     {
         if (!HoldingLasso || !ChargingLasso) return;
         ChargingLasso = false;

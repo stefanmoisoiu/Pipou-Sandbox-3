@@ -7,6 +7,7 @@ TagManager:
   - Folder
   - UI Camera
   - Lasso Instance
+  - Big Magnet
   layers:
   - Default
   - TransparentFX

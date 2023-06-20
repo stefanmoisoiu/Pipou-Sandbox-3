@@ -52,6 +52,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: -1341288324616855863}
     m_Position: {x: 30, y: 460, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2607432118852630420}
+    m_Position: {x: 30, y: 510, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -732,14 +735,14 @@ BlendTree:
   m_UseAutomaticThresholds: 1
   m_NormalizedBlendValues: 0
   m_BlendType: 0
---- !u!1102 &3791730773244292852
+--- !u!1102 &2607432118852630420
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hold Magnet
+  m_Name: Hold Big Magnet
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -752,7 +755,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5ca9a9a13f4100045be6da1b21f97101, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3650b0ceae2ce8941a6a5b7cdcdda653, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -820,9 +823,6 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 4004403436785701569}
     m_Position: {x: -200, y: 350, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3791730773244292852}
-    m_Position: {x: -165, y: 415, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
