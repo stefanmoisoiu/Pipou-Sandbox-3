@@ -1,7 +1,7 @@
 using System;
 using Cinemachine;
-using UnityEngine;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Unity.Netcode;
 
 public class PCamera : NetworkBehaviour
@@ -87,12 +87,12 @@ public class PCamera : NetworkBehaviour
                 if (TargetRotation.y < -lookDownStartAngle)
                 {
                         float advancement = -(TargetRotation.y + lookDownStartAngle) / (minHeadAngle - lookDownStartAngle);
-                        headCam.position = head.position + startHeadCamPos + headCam.forward * (lookDownMoveAmount * advancement);
+                        headCam.position = head.position + startHeadCamPos + headCam.forward * (lookDownMoveAmount * advancement * transform.root.localScale.x);
                 }
                 else if (TargetRotation.y > lookUpStartAngle)
                 {
                         float advancement = (TargetRotation.y - lookUpStartAngle) / (maxHeadAngle - lookUpStartAngle);
-                        headCam.position = head.position + startHeadCamPos - orientation.forward * (lookUpMoveAmount * advancement);
+                        headCam.position = head.position + startHeadCamPos - orientation.forward * (lookUpMoveAmount * advancement * transform.root.localScale.x);
                 }
                 else headCam.localPosition = startHeadCamPos;
         }

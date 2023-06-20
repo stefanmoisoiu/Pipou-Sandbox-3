@@ -5624,6 +5624,7 @@ GameObject:
   - component: {fileID: 7778969607228523429}
   - component: {fileID: 2753141445102849384}
   - component: {fileID: 8314736622933193349}
+  - component: {fileID: 8154782451476386412}
   m_Layer: 3
   m_Name: Pull
   m_TagString: Untagged
@@ -5640,7 +5641,7 @@ Transform:
   m_GameObject: {fileID: 5151981004244274188}
   m_LocalRotation: {x: -0.70710635, y: -0.00000008281833, z: -0.0000000071098754,
     w: 0.70710725}
-  m_LocalPosition: {x: 0.00000023841858, y: -11.826823, z: -0.000003403886}
+  m_LocalPosition: {x: 0.000000029802322, y: -8.77474, z: -0.0000023798557}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5730,7 +5731,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -6286,7 +6287,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 8}
+    m_Scale: {x: 2, y: 2, z: 15}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -6484,7 +6485,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 60
+      scalar: 120
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -10423,7 +10424,7 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
-  m_SortMode: 0
+  m_SortMode: 1
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
@@ -10451,6 +10452,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8154782451476386412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5151981004244274188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9188c52f759742f6baa5481f923315a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 2753141445102849384}
 --- !u!1 &5217097106426513571
 GameObject:
   m_ObjectHideFlags: 0
@@ -12278,7 +12292,7 @@ MonoBehaviour:
       value: 0
   testItem: {fileID: 4665634062502119505}
   testItem2: {fileID: 4483792798119572816}
-  testItem3: {fileID: 7783392710434382611}
+  testItem3: {fileID: 5591735647753294333}
   uiItems:
   - {fileID: 2228030489113570722}
   - {fileID: 1633535455509609195}
@@ -14250,6 +14264,7 @@ GameObject:
   - component: {fileID: 1757320063234224979}
   - component: {fileID: 8625171016255615597}
   - component: {fileID: 6089527437333028248}
+  - component: {fileID: 4166158831901465952}
   m_Layer: 3
   m_Name: Push
   m_TagString: Untagged
@@ -14265,7 +14280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8884523824655158601}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.000000834465, y: -7.2486978, z: 0.0000019908177}
+  m_LocalPosition: {x: -0.0000008493662, y: -8.774739, z: 0.0000014788027}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14355,7 +14370,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.25
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -14911,7 +14926,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 1, y: 1, z: 8}
+    m_Scale: {x: 2, y: 2, z: 15}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -15109,7 +15124,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 60
+      scalar: 120
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -19048,7 +19063,7 @@ ParticleSystemRenderer:
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
-  m_SortMode: 0
+  m_SortMode: 1
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
@@ -19076,6 +19091,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4166158831901465952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8884523824655158601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9188c52f759742f6baa5481f923315a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystem: {fileID: 8625171016255615597}
 --- !u!1 &8942596390343879538
 GameObject:
   m_ObjectHideFlags: 0
@@ -22432,14 +22460,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5779415971697436047}
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 17e1cbde2f5b0564fb2bf775c5a9e444,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5257913388720611645}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 17e1cbde2f5b0564fb2bf775c5a9e444,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 773806729049358193}
     - targetCorrespondingSourceObject: {fileID: 7036213049465896255, guid: 17e1cbde2f5b0564fb2bf775c5a9e444,
         type: 3}
       insertIndex: -1
@@ -22910,67 +22930,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7221167432931787175}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5257913388720611645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7563747559446543606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c86ba130e5a5458a98e3b482192a6dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  humanoidConfig: {fileID: 0}
-  targetRoot: {fileID: 0}
-  state: 0
-  stateSettings:
-    killDuration: 1
-    deadMuscleWeight: 0.01
-    deadMuscleDamper: 2
-    maxFreezeSqrVelocity: 0.02
-    freezePermanently: 0
-    enableAngularLimitsOnKill: 1
-    enableInternalCollisionsOnKill: 1
-  mode: 0
-  blendTime: 0.1
-  fixTargetTransforms: 1
-  solverIterationCount: 6
-  visualizeTargetPose: 1
-  mappingWeight: 1
-  pinWeight: 1
-  muscleWeight: 1
-  muscleSpring: 100
-  muscleDamper: 0
-  pinPow: 4
-  pinDistanceFalloff: 5
-  angularPinning: 0
-  updateJointAnchors: 1
-  supportTranslationAnimation: 0
-  angularLimits: 0
-  internalCollisions: 0
-  muscles: []
-  propMuscles: []
-  solvers: []
-  mapDisconnectedMuscles: 1
-  storeTargetMappedState: 1
---- !u!114 &773806729049358193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7563747559446543606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d25a140bfa1c49bfafcaa11cff00f2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectedRigidbody: {fileID: 0}
-  selectedCollider: {fileID: 0}
-  symmetry: 1
-  mode: 0
 --- !u!4 &7897434815391913200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8525333223864527529, guid: 17e1cbde2f5b0564fb2bf775c5a9e444,

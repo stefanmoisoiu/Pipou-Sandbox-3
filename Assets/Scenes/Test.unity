@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18214607, g: 0.22784522, b: 0.30737677, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -223,7 +223,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &267566716
 PrefabInstance:
@@ -241,7 +241,7 @@ PrefabInstance:
     - target: {fileID: 9039465987964637770, guid: 08dca194732f3014aa53ba79fd73de4d,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 9039465987964637770, guid: 08dca194732f3014aa53ba79fd73de4d,
         type: 3}
@@ -521,14 +521,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576214192}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.37548643, y: 0.17596269, z: -0.7155179, w: 0.5622111}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 42.378, y: -27.358, z: -114.463}
 --- !u!114 &1576214195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -552,3 +552,76 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!1001 &1975174351
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5108243955345646515, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_Name
+      value: SM_Bld_Ruins_Archway_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.443573
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.518636
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5597957279540951305, guid: f06a8c0d2206f2f47870941f1a79927d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f06a8c0d2206f2f47870941f1a79927d, type: 3}
