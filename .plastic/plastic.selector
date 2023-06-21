@@ -1,0 +1,4 @@
+repository "Pipou Sandbox 3@local"
+  path "/"
+    br "/main"
+    co "/main"

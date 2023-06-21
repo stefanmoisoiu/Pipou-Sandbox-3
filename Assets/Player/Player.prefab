@@ -13644,8 +13644,8 @@ MonoBehaviour:
       value: 0
   wallClimbLength: 1
   wallClimbAngleMargin: 90
-  wallClimbSpeed: 0.6
-  maxWallClimbSpeed: 6
+  wallClimbSpeed: 0.8
+  maxWallClimbSpeed: 8.5
   startWallCheckDistance: 0.25
   wallCheckDistance: 1
   wallPushHSpeed: 4
